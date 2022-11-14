@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import Login from './components/authentication/Login';
 import { Link, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -17,7 +15,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <div className="container mt-3">
+      <div className="">
         <Routes>
           {!isloggedIn()?
             <Route path="/" element={<Login />} />: ''
