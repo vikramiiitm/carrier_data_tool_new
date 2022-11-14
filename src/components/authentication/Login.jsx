@@ -3,15 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate  } from 'react-router-dom';
 
 
-// import { login } from '../../service/authentication/AuthService'
-import login from '../../actions/auth'
+import LoginService from '../../service/authentication/AuthService'
+// import login from '../../actions/auth'
 
 const Login = () => {
     let navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const user = localStorage.getItem('user')
+    // console.log(JSON.stringify(user.access))
+    // const isLoggedIn = JSON.stringify(user.data)
     const isLoggedIn = useSelector(state => state.isLoggedIn)
+    
     const dispatch = useDispatch();
 
     const onChangeUsername = (e) => {
@@ -27,12 +30,13 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         console.log('calling login funtion')
-        dispatch(login(username, password))
-            .then(()=>{
-                console.log(`line 32: ${isLoggedIn}`)
-                navigate('/home')
-            })
+        LoginService(username, password)
+            // .then(()=>{
+            //     console.log(`line 32: ${isLoggedIn}`)
+            //     navigate('/home')
+            // })
     };
+    
     console.log(`line 36: ${isLoggedIn}`)
     return(
         <div>

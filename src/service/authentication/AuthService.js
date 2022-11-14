@@ -1,20 +1,35 @@
 import client from "./axiosApi";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {loginPending, loginSuccess} from '../../actions/auth'
+import { store } from "../../store.js";
 const config = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
 };
 
-export const login = (username, password) => {
+function LoginService(username, password){
+    console.log(username)
+    // Here dispatch for login pending action
+
     return axios.post(`http://127.0.0.1:8000/api/account/token/`,{
         username,
         password,
     })
     .then(response => {
-        if(response.data.accessToken) {
-            localStorage.setItem('user', JSON.stringify(response.data))
+        // here response status is ok
+        console.log(JSON.stringify(response.data))
+        store.dispatch(loginSuccess(response))
+        console.log(312312312)
+        if(JSON.stringify(response.data)) {
+            localStorage.setItem('user', JSON.stringify(response))
+            console.log(JSON.parse(localStorage.getItem('user')).data.access);
+            // for (var key in k){
+            //     console.log('26>>>',key, k[key])
+            // }
+
         }
-        return response.data;
+        return Promise.resolve();
     })
     .catch((error)=>{
         if (error.response){
@@ -35,4 +50,4 @@ export const login = (username, password) => {
 };
 
 
-// export default login;
+export default LoginService;

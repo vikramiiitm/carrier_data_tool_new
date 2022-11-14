@@ -17,7 +17,7 @@ export const authReducer = (state=initialState, action) =>{
             return {
                 ...state,
                 isLoggedIn:true,
-                user: payload.user,
+                user: payload,
                 tr:'er'  //after dispatch we added one more state
             };
         default: return state;
