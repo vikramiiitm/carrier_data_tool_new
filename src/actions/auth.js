@@ -2,6 +2,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGIN_PENDING,
+    SIGNUP_SUCCESS
 } from './type'
 
 
@@ -43,4 +44,10 @@ export function loginPending() {
     }
 }
 // export default login;
+
+export function singupSuccess() {
+    return {
+        type: SIGNUP_SUCCESS
+    }
+}
 

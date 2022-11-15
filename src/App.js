@@ -1,6 +1,8 @@
 import Login from './components/authentication/Login';
+import Register from './components/authentication/Register'
 import { Link, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Navbar from './components/Navbar';
 
 
 function App() {
@@ -15,16 +17,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Navbar/>
       <div className="">
         <Routes>
-          {!isloggedIn()?
-            <Route path="/" element={<Login />} />: ''
-          }
-          {/* <Route path="/register" element={<Register />} /> */}
-          {/* <Route path="/profile" element={<Profile />} />
-          <Route path="/user" element={<BoardUser />} />
-          <Route path="/mod" element={<BoardModerator />} />
-          <Route path="/admin" element={<BoardAdmin />} /> */}
+            <Route path="/register" element={<Register />} />: ''
+        </Routes>
+        <Routes>
+            <Route path="/login" element={<Login />} />: ''
         </Routes>
       </div>      </header>
     </div>
