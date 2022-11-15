@@ -10,9 +10,9 @@ export default function Navbar() {
         src={require("../assets/logo_CDT.png")}
         height="7%"
         alt=""
-        style={{ "max-width": "5%", padding: "0px", margin: "0px" }}
+        style={{ "max-width": "5%", padding: "0px", margin: "0px", 'min-width':'5%'}}
       />
-      <a className="navbar-brand" href="#"></a>
+      <a className="navbar-brand p-1" href="/login" style={{'margin-top':'0px'}}>Carrier Data Tool</a>
       <button
         className="navbar-toggler"
         type="button"
@@ -27,11 +27,6 @@ export default function Navbar() {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              <p className="text-bold" style={{'margin-bottom':'0rem'}}>Carrier Data Tool</p>
-            </a>
-          </li>
           <li className="nav-item">
             <a className="nav-link" href="#">
               Link

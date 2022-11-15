@@ -2,7 +2,7 @@ import { authHeader } from "../auth-headers";
 import client from "../authentication/axiosApi";
 
 
-export const getCompanyList = () => {
-    return client.get('company/companies/',{headers: authHeader()});
+export const createCompanyService = (data) => {
+    return client.post('company/add-company/', data, {headers: authHeader()});
 }
 

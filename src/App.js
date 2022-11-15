@@ -3,6 +3,7 @@ import Register from './components/authentication/Register'
 import { Link, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from './components/Navbar';
+import Company from './components/company/Company';
 
 
 function App() {
@@ -25,7 +26,11 @@ function App() {
         <Routes>
             <Route path="/login" element={<Login />} />: ''
         </Routes>
-      </div>      </header>
+        <Routes>
+            <Route path="/add-company" element={<Company />} />: ''
+        </Routes>
+      </div> 
+      </header>
     </div>
   );
 }
