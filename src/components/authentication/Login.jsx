@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate  } from 'react-router-dom';
+import { NavItem } from "reactstrap";
 
 
 import LoginService from '../../service/authentication/AuthService'
@@ -10,10 +11,26 @@ const Login = () => {
     let navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const user = localStorage.getItem('user')
+    const[isLoggedIn, setIsLoggedIn] = useState(false);
     // console.log(JSON.stringify(user.access))
     // const isLoggedIn = JSON.stringify(user.data)
-    const isLoggedIn = useSelector(state => state.isLoggedIn)
+
+
+    useEffect(()=>{
+        console.log('inside')
+        const user = JSON.parse(localStorage.getItem('user'))
+        console.log(user)
+        const access = user?.data?.access
+        if (access ===undefined||access===null) {
+            console.log('ankit');
+            setIsLoggedIn(false)
+        }
+        else {
+            setIsLoggedIn(true)
+        }
+    },[])
+
+    console.log('isLoggedIn: ',isLoggedIn)
     
     const dispatch = useDispatch();
 
@@ -31,10 +48,10 @@ const Login = () => {
         e.preventDefault();
         console.log('calling login funtion')
         LoginService(username, password)
-            // .then(()=>{
-            //     console.log(`line 32: ${isLoggedIn}`)
-            //     navigate('/home')
-            // })
+            .then(()=>{
+                console.log(`line 32: ${isLoggedIn}`)
+                navigate('/companies')
+            })
     };
     
     console.log(`line 36: ${isLoggedIn}`)
@@ -74,13 +91,12 @@ const Login = () => {
                             </div>
                             <span className="text-center">
                                 <button type="submit" style={{'background':'#ff6600', 'color':'white'}} class="btn btn-lg mt-5">Submit</button>
-                            </span>
+                             </span>
                         </div>
                     </form>
                 </div>
-            : 'pass'}
-
-    </div>
+            : <Navigate replace to='/companies'/>}
+        </div>
     );
 };
 

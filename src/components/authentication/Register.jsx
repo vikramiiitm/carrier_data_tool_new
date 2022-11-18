@@ -14,7 +14,7 @@ const Login = () => {
     const user = localStorage.getItem('user')
     // console.log(JSON.stringify(user.access))
     // const isLoggedIn = JSON.stringify(user.data)
-    const isLoggedIn = useSelector(state => state.isLoggedIn)
+    const isLoggedIn = user?.data?.access
     
     const dispatch = useDispatch();
 
@@ -93,7 +93,7 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
-            : 'pass'}
+            : <Navigate to='/login' />}
 
     </div>
     );

@@ -4,6 +4,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from './components/Navbar';
 import Company from './components/company/Company';
+import CompanyListing from './components/company/CompanyListing';
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         </Routes>
         <Routes>
             <Route path="/add-company" element={<Company />} />: ''
+        </Routes>
+        <Routes>
+            <Route path="/companies" element={<CompanyListing />} />: ''
         </Routes>
       </div> 
       </header>

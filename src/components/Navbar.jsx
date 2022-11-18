@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -12,7 +13,7 @@ export default function Navbar() {
         alt=""
         style={{ "max-width": "5%", padding: "0px", margin: "0px", 'min-width':'5%'}}
       />
-      <a className="navbar-brand p-1" href="/login" style={{'margin-top':'0px'}}>Carrier Data Tool</a>
+      <a className="navbar-brand p-1 ps-3 fs-3 fw-bolder" href="/login" style={{'margin-top':'0px', 'color':'#ff6600'}}>Carrier Data Tool</a>
       <button
         className="navbar-toggler"
         type="button"
@@ -28,9 +29,7 @@ export default function Navbar() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
+              <Link to={'/add-company'} className="nav-link">Add Company</Link>
           </li>
           {/* <li className="nav-item dropdown">
             <a
@@ -60,11 +59,11 @@ export default function Navbar() {
         </ul>
         <ul className="navbar-nav">
           <li className="nav-item me-auto">
-            <a className="nav-link" href="#">
+            {/* <a className="nav-link" href="#"> */}
             <i class='fas fa-user-alt'>
              <span className="p-1">Vikram</span>
             </i>
-            </a>
+            {/* </a> */}
           </li>
         </ul>
         {/* <form className="form-inline my-2 my-lg-0">
