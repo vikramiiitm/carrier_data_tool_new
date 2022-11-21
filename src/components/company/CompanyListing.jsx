@@ -12,11 +12,9 @@ export default function CompanyListing() {
   const [legalName, setLegalName] = useState("");
   const [name, setName] = useState("");
   const [dot, setDot] = useState("");
+  const [city, setCity] = useState("");
   // console.log(JSON.stringify(user.access))
   // const isLoggedIn = JSON.stringify(user.data)
-
-  const search_url = useLocation().search;
-  console.log('search_url: ',search_url)
 
   useEffect(()=>{
       console.log('inside')
@@ -24,7 +22,7 @@ export default function CompanyListing() {
       console.log(user)
       const access = user?.data?.access
       if (access ===undefined||access===null) {
-          console.log('ankit');
+
           setIsLoggedIn(false)
       }
       else {
@@ -67,10 +65,14 @@ export default function CompanyListing() {
       Header: "Active",
       accessor: "is_active",
     },
+    {
+      Header: "City",
+      accessor: "address.city",
+    },
   ];
   // THis code is very important if removed table will disappear
   const columns = useMemo(() => COLUMNS, []);
-  const Data = useMemo(() => data, []);
+  const Data = useMemo(() => data, [data]);
 
   console.log(data);
   const {
@@ -91,7 +93,7 @@ export default function CompanyListing() {
   };
 
   const filterlist = () => {
-      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&name=${name}&dot=${dot}`,  {headers: authHeader()})
+      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&name=${name}&dot=${dot}&city=${city}`,  {headers: authHeader()})
   }
 
   async function onsubmit(e){
@@ -112,7 +114,7 @@ export default function CompanyListing() {
       style={{ "background-color": "#f7f7f7" }}
     >
       <form className="row d-flex align-items-center justify-content-center p-2" onSubmit={e => onsubmit(e)} >
-        <div className="col-sm-2 h-100 d-flex align-items-center justify-content-center"> Filter Companies</div>
+        <div className="col-sm-2 h-100 d-flex align-items-center justify-content-center"> Filter Companies:</div>
         <div className="col-sm-2">
           {/* <label for="legal_name" className="form-label">
             Legal Name
@@ -153,6 +155,20 @@ export default function CompanyListing() {
             value={dot}
             placeholder='DOT'
             onChange={(e) => onChange(e, setDot)}
+          />
+        </div>
+        <div className="col-sm-2">
+          {/* <label for="inputAddress" className="form-label">
+            Dot
+          </label> */}
+          <input
+            type="text"
+            className="form-control"
+            id="city"
+            placeholder="ex. 12345"
+            value={city}
+            placeholder='City'
+            onChange={(e) => onChange(e, setCity)}
           />
         </div>
         <div className="text-center col-sm-2">
