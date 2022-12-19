@@ -23,7 +23,7 @@ function LoginService(username, password){
         console.log(312312312)
         if(JSON.stringify(response.data)) {
             localStorage.setItem('user', JSON.stringify(response))
-            console.log(JSON.parse(localStorage.getItem('user')).data.access);
+            console.log('service',JSON.parse(localStorage.getItem('user')).data);
             // for (var key in k){
             //     console.log('26>>>',key, k[key])
             // }

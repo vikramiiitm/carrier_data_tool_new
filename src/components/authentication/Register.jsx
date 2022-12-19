@@ -11,8 +11,8 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const user = localStorage.getItem('user')
-    // console.log(JSON.stringify(user.access))
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(JSON.stringify('user.data',user.data))
     // const isLoggedIn = JSON.stringify(user.data)
     const isLoggedIn = user?.data?.access
     

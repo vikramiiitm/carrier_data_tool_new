@@ -5,16 +5,22 @@ import axios from "axios";
 import { getCompanyService } from "../../service/CompanyService/Company";
 import { authHeader } from "../../service/auth-headers";
 import { useLocation } from "react-router-dom";
+import { DataGrid } from '@mui/x-data-grid';
 
 export default function CompanyListing() {
-  const [data, setData] = useState([]);
+  const [table, setTable] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [legalName, setLegalName] = useState("");
   const [name, setName] = useState("");
   const [dot, setDot] = useState("");
   const [city, setCity] = useState("");
+  const [localTable, setLocalTable] = useState();
+  const [next, setNext] = useState();
+  const [previous, setPrevious] = useState();
   // console.log(JSON.stringify(user.access))
   // const isLoggedIn = JSON.stringify(user.data)
+
+  const base_url = 'http://127.0.0.1:8000/api/company/'
 
   useEffect(()=>{
       console.log('inside')
@@ -33,59 +39,52 @@ export default function CompanyListing() {
   // Using useEffect to call the API once mounted and set the data
   useEffect(() => {
     (async () => {
-      const result = await getCompanyService();
-      setData(result.data);
+      const res = await getCompanyService();
+      setTable(res.data.results);
     })();
   }, []);
 
+  const paginationHanler = async (url) => {
+    const res = await getCompanyService();
+    setTable(res.data.results);
+  }
+  
+
+  // destructing company data for the table
+  const setDataTable = (companies) => {
+    let localCompanyList = [];
+    // let count = 1;
+    for(let company of companies){
+      let tempCompany = {};
+      console.log(`first company ${company.legal_name}`)
+      
+      tempCompany.id = company.id;
+      tempCompany.legal_name = company.legal_name;
+      tempCompany.dot = company.dot;
+      
+      for(let address of company.addresses){
+        console.log('address: ',address)
+        tempCompany.city = address.city;
+        tempCompany.state = address.state;
+        tempCompany.zip = address.zip;
+      }
+      localCompanyList.push(tempCompany);
+      // break;
+    }
+    console.log('localCompanyList: ', localCompanyList)
+    return localCompanyList;
+  }
 
 
-  const COLUMNS = [
-    {
-      Header: "Legal Name",
-      accessor: "legal_name",
-    },
-    {
-      Header: "Name",
-      accessor: "name",
-    },
-    {
-      Header: "DOT",
-      accessor: "dot",
-    },
-    {
-      Header: "MC Number",
-      accessor: "motor_carrier_number",
-    },
-    {
-      Header: "Incorporation date",
-      accessor: "incorporation_date",
-    },
-    {
-      Header: "Active",
-      accessor: "is_active",
-    },
-    {
-      Header: "City",
-      accessor: "address.city",
-    },
-  ];
+  useEffect(() =>{
+    let temp = setDataTable(table);
+    setLocalTable(temp);
+  },[table])
+
+  ??//
+
+  console.log('localTable: ',localTable)
   // THis code is very important if removed table will disappear
-  const columns = useMemo(() => COLUMNS, []);
-  const Data = useMemo(() => data, [data]);
-
-  console.log(data);
-  const {
-    getTableProps, // table props from react-table
-    getTableBodyProps, // table body props from react-table
-    headerGroups, // headerGroups, if your table has groupings
-    rows, // rows for the table based on the data passed
-    prepareRow, // Prepare the row (this function needs to be called for each row before getting the row props)
-  } = useTable({
-    columns,
-    data,
-  });
-
 
   const onChange = (e, field) => {
     const value = e.target.value;
@@ -101,15 +100,36 @@ export default function CompanyListing() {
     console.log('InsideCOmpany submit');
     await filterlist(legalName, name, dot).
     then((response)=>{
-      setData(response.data)
+      setTable(response.data)
     })
   }
+  
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'legal_name', headerName: 'Legal Name', width: 130 },
+    { field: 'dot', headerName: 'DOT', width: 130 },
+    // {
+    //   field: 'age',
+    //   headerName: 'Age',
+    //   type: 'number',
+    //   width: 90,
+    // },
+    // {
+    //   field: 'fullName',
+    //   headerName: 'Full name',
+    //   description: 'This column has a value getter and is not sortable.',
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    // },
+  ];
 
   return (
     <>
 
 
-<div
+    <div
       className="bg-light m-4 h-100 d-flex align-items-center justify-content-center p-2"
       style={{ "background-color": "#f7f7f7" }}
     >
@@ -153,7 +173,7 @@ export default function CompanyListing() {
             id="dot"
             placeholder="ex. 12345"
             value={dot}
-            placeholder='DOT'
+            // placeholder='DOT'
             onChange={(e) => onChange(e, setDot)}
           />
         </div>
@@ -167,7 +187,7 @@ export default function CompanyListing() {
             id="city"
             placeholder="ex. 12345"
             value={city}
-            placeholder='City'
+            // placeholder='City'
             onChange={(e) => onChange(e, setCity)}
           />
         </div>
@@ -177,41 +197,18 @@ export default function CompanyListing() {
       </form>
     </div>
 
+          {isLoggedIn && 
 
-
-     {/* listing */}
-      {isLoggedIn?
-      <div className="bg-light m-4 h-100 d-flex align-items-center justify-content-center">
-        <br />
-        <table {...getTableProps()} className="table m-3">
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} style={{ color: "#ff6600" }}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    :'asdf'}
+            <div style={{display: 'flex'}}>
+              <div style={{ height: '80vh', background: '#f7f7f7', flexGrow:1}} className='m-4 mt-1'>
+                <DataGrid
+                  rows={localTable}
+                  columns={columns}
+                />
+              </div>
+            </div>
+          }
+      
     </>
   );
 }

@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
+
+    const [username, setUsername] = useState("")
+    const data=useSelector(state=>state)
+    useEffect(()=>{
+      const user = JSON.parse(localStorage.getItem('user'))?.data?.user
+      console.log('user: ', user, JSON.parse(localStorage.getItem('user')))
+      setUsername(user);
+    },[data.isLoggedIn]);
+
+    // const username = JSON.parse(localStorage.getItem('user'))?.data?.user
+
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light separated"
@@ -57,15 +69,16 @@ export default function Navbar() {
             </div>
           </li> */}
         </ul>
-        <ul className="navbar-nav">
-          <li className="nav-item me-auto">
-            {/* <a className="nav-link" href="#"> */}
-            <i class='fas fa-user-alt'>
-             <span className="p-1">Vikram</span>
-            </i>
-            {/* </a> */}
-          </li>
-        </ul>
+                 <ul className="navbar-nav">
+                 <li className="nav-item me-auto">
+                   {/* <a className="nav-link" href="#"> */}
+                   <i class='fas fa-user-alt'>
+                    <span className="p-1" style={{'text-transform':'capitalize'}}>{username}</span>
+                   </i>
+                   {/* </a> */}
+                 </li>
+               </ul>
+
         {/* <form className="form-inline my-2 my-lg-0">
       <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
       <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
