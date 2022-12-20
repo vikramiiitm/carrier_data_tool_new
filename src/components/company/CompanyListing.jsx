@@ -16,8 +16,9 @@ export default function CompanyListing() {
   const [localTable, setLocalTable] = useState();
   const [next, setNext] = useState();
   const [previous, setPrevious] = useState();
-  const [callNext,setNextCall]=useState(false)
-  const [callPrev,setPrevCall]=useState(false)
+  const [callNext,setNextCall]=useState(false);
+  const [callPrev,setPrevCall]=useState(false);
+  const [currentPage, setCUrrentPage] = useState();
 
   // console.log(JSON.stringify(user.access))
   // const isLoggedIn = JSON.stringify(user.data)
@@ -50,6 +51,9 @@ export default function CompanyListing() {
       if (result?.data?.previous){
         setPrevious(result.data.previous)
       }
+      if (result?.data?.current){
+        setCUrrentPage(result.data.current)
+      }
     })();
   }, []);
 
@@ -65,6 +69,8 @@ export default function CompanyListing() {
       tempCompany.legal_name = company.legal_name;
       tempCompany.dot = company.dot;
       tempCompany.is_active = company.is_active;
+      tempCompany.dba = company.dba;
+      
       
       for(let address of company.addresses){
         tempCompany.city = address.city;
@@ -84,7 +90,7 @@ export default function CompanyListing() {
     },
     {
       Header: "Name",
-      accessor: "name",
+      accessor: "dba",
     },
     {
       Header: "DOT",
@@ -98,18 +104,19 @@ export default function CompanyListing() {
       Header: "State",
       accessor: "state",
     },
-    {
-      Header: "MC Number",
-      accessor: "motor_carrier_number",
-    },
-    {
-      Header: "Incorporation date",
-      accessor: "incorporation_date",
-    },
-    {
-      Header: "Active",
-      accessor: "is_active",
-    },
+  
+    // {
+    //   Header: "MC Number",
+    //   accessor: "motor_carrier_number",
+    // },
+    // {
+    //   Header: "Incorporation date",
+    //   accessor: "incorporation_date",
+    // },
+    // {
+    //   Header: "Active",
+    //   accessor: "is_active",
+    // },
 
   ];
   // THis code is very important if removed table will disappear
@@ -139,7 +146,7 @@ export default function CompanyListing() {
   };
 
   const filterlist = () => {
-      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&name=${name}&dot=${dot}&city=${city}`,  {headers: authHeader()})
+      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}`,  {headers: authHeader()})
   }
 
 
@@ -157,6 +164,9 @@ export default function CompanyListing() {
         }
         if (response?.data?.previous){
           setPrevious(response.data.previous)
+        }
+        if (response?.data?.current){
+          setCUrrentPage(response.data.current)
         }
         console.log('response; ', response)
       }
@@ -178,6 +188,9 @@ export default function CompanyListing() {
         if (response?.data?.previous){
           setPrevious(response.data.previous)
         }
+        if (response?.data?.current){
+          setCUrrentPage(response.data.current)
+        }
         console.log('response; ', response)
       }
     }
@@ -195,7 +208,17 @@ export default function CompanyListing() {
     console.log('InsideCOmpany submit');
     await filterlist(legalName, name, dot)
     .then((response)=>{
-      setData(response.data.results)
+      let temp = flatData(response.data.results)
+      setData(temp)
+      if (response?.data?.next){
+        setNext(response.data.next)
+      }
+      if (response?.data?.previous){
+        setPrevious(response.data.previous)
+      }
+      if (response?.data?.current){
+        setCUrrentPage(response.data.current)
+      }
     })
   }
 
@@ -272,7 +295,7 @@ export default function CompanyListing() {
 
 
      {/* listing */}
-      {isLoggedIn?
+      {isLoggedIn &&
       <div className="bg-light m-4 h-100 d-flex align-items-center justify-content-center">
         <br />
         <table {...getTableProps()} className="table m-3">
@@ -291,29 +314,33 @@ export default function CompanyListing() {
             {rows.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps()} >
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td {...cell.getCellProps()} >{cell.render("Cell")}</td>
                     );
                   })}
                 </tr>
               );
             })}
           </tbody>
-              <div style={{width:'100'}} className='pagination m-1'>
-              <nav aria-label="Page navigation example">
-                  <button onClick={() =>setPrevCall(pre=>!pre)}>Previous</button>
-                </nav>
-                <nav aria-label="Page navigation example">
-                  <button onClick={() =>setNextCall(pre=>!pre)}>Next</button>
-                </nav>
-
+              <div style={{alignItems:'left!important'}} className='pagination m-1'>
+                  <nav aria-label="Page navigation example" style={{alignItems:'left!important', border:'red'}}>
+                    <ul class="pagination">
+                      <li class="page-item disabled"  className="mr-2">
+                        <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setPrevCall(pre=>!pre)}>Previous</button>
+                      </li>
+                      <li class="page-item"  className="mr-2">
+                        <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)}>{currentPage}</button></li>
+                      <li class="page-item">
+                        <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setNextCall(pre=>!pre)}>Next</button>
+                      </li>
+                    </ul>
+                  </nav>
               </div>
         </table>
       </div>
-      
-    :'asdf'}
+      }
     </>
   );
 }
