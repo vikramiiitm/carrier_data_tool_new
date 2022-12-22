@@ -6,6 +6,19 @@ import { getCompanyService } from "../../service/CompanyService/Company";
 import { authHeader } from "../../service/auth-headers";
 import { useLocation } from "react-router-dom";
 
+import NavbarSide from "../NavbarSide";
+
+
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+
+
 export default function CompanyListing() {
   const [data, setData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,6 +35,19 @@ export default function CompanyListing() {
 
   // console.log(JSON.stringify(user.access))
   // const isLoggedIn = JSON.stringify(user.data)
+
+  // Table config
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(20);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
 
   useEffect(()=>{
@@ -57,9 +83,6 @@ export default function CompanyListing() {
     })();
   }, []);
 
-   
-  
-
   const flatData = (companies) => {
     console.log('flatData called" ', companies)
     let localCompanyList = [];
@@ -85,24 +108,24 @@ export default function CompanyListing() {
 
   const COLUMNS = [
     {
-      Header: "Legal Name",
-      accessor: "legal_name",
+      label: "Legal Name",
+      id: "legal_name",
     },
     {
-      Header: "Name",
-      accessor: "dba",
+      label: "Name",
+      id: "dba",
     },
     {
-      Header: "DOT",
-      accessor: "dot",
+      label: "DOT",
+      id: "dot",
     },
     {
-      Header: "City",
-      accessor: "city",
+      label: "City",
+      id: "city",
     },
     {
-      Header: "State",
-      accessor: "state",
+      label: "State",
+      id: "state",
     },
   
     // {
@@ -223,124 +246,138 @@ export default function CompanyListing() {
   }
 
   return (
-    <>
-
-
-<div
-      className="bg-light m-4 h-100 d-flex align-items-center justify-content-center p-2"
-      style={{ "background-color": "#f7f7f7" }}
-    >
-      <form className="row d-flex align-items-center justify-content-center p-2" onSubmit={e => onsubmit(e)} >
-        <div className="col-sm-2 h-100 d-flex align-items-center justify-content-center"> Filter Companies:</div>
-        <div className="col-sm-2">
-          {/* <label for="legal_name" className="form-label">
-            Legal Name
-          </label> */}
-          <input
-            type="legal_name"
-            className="form-control"
-            id="legal_name"
-            name="legal_name"
-            value={legalName}
-            placeholder='Legal Name'
-            onChange={(e) => onChange(e, setLegalName)}
-          />
-        </div>
-        <div className="col-sm-2">
-          {/* <label for="name" className="form-label">
-            Name
-          </label> */}
-          <input
-            type="name"
-            className="form-control"
-            id="name"
-            name="name"
-            value={name}
-            placeholder='Name'
-            onChange={(e) => onChange(e, setName)}
-          />
-        </div>
-        <div className="col-sm-2">
-          {/* <label for="inputAddress" className="form-label">
-            Dot
-          </label> */}
-          <input
-            type="number"
-            className="form-control"
-            id="dot"
-            value={dot}
-            placeholder='DOT'
-            onChange={(e) => onChange(e, setDot)}
-          />
-        </div>
-        <div className="col-sm-2">
-          {/* <label for="inputAddress" className="form-label">
-            Dot
-          </label> */}
-          <input
-            type="text"
-            className="form-control"
-            id="city"
-            value={city}
-            placeholder='City'
-            onChange={(e) => onChange(e, setCity)}
-          />
-        </div>
-        <div className="text-center col-sm-2">
-          <button type="submit" style={{'background':'#ff6600', 'color':'white'}} class="btn">Submit</button>
+    <div>
+      <div style={{width:'20%', float:'left', height:'100vh'}} >
+        <NavbarSide/>
       </div>
-      </form>
-    </div>
+      <div
+        className="bg-light m-4 d-flex align-items-center justify-content-center p-2"
+        style={{ "background-color": "#f7f7f7", overflow:'hidden'}}
+      >
+        <form className="row d-flex align-items-center justify-content-center p-2 m-1" onSubmit={e => onsubmit(e)} >
+          <div className="col-sm-2 d-flex align-items-center justify-content-center"> Filter Companies:</div>
+          <div className="col-sm-2 col-md-2">
+            {/* <label for="legal_name" className="form-label">
+              Legal Name
+            </label> */}
+            <input
+              type="legal_name"
+              className="form-control"
+              id="legal_name"
+              name="legal_name"
+              value={legalName}
+              placeholder='Legal Name'
+              onChange={(e) => onChange(e, setLegalName)}
+            />
+          </div>
+          <div className="col-sm-2">
+            {/* <label for="name" className="form-label">
+              Name
+            </label> */}
+            <input
+              type="name"
+              className="form-control"
+              id="name"
+              name="name"
+              value={name}
+              placeholder='Name'
+              onChange={(e) => onChange(e, setName)}
+            />
+          </div>
+          <div className="col-sm-2">
+            {/* <label for="inputAddress" className="form-label">
+              Dot
+            </label> */}
+            <input
+              type="number"
+              className="form-control"
+              id="dot"
+              value={dot}
+              placeholder='DOT'
+              onChange={(e) => onChange(e, setDot)}
+            />
+          </div>
+          <div className="col-sm-2">
+            {/* <label for="inputAddress" className="form-label">
+              Dot
+            </label> */}
+            <input
+              type="text"
+              className="form-control"
+              id="city"
+              value={city}
+              placeholder='City'
+              onChange={(e) => onChange(e, setCity)}
+            />
+          </div>
+          <div className="text-center col-sm-2">
+            <button type="submit" style={{'background':'#ff6600', 'color':'white'}} class="btn">Submit</button>
+        </div>
+        </form>
+      </div>
 
 
 
      {/* listing */}
       {isLoggedIn &&
-      <div className="bg-light m-4 h-100 d-flex align-items-center justify-content-center">
-        <br />
-        <table {...getTableProps()} className="table m-3">
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} style={{ color: "#ff6600" }}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} >
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()} >{cell.render("Cell")}</td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-              <div style={{alignItems:'left!important'}} className='pagination m-1'>
-                  <nav aria-label="Page navigation example" style={{alignItems:'left!important', border:'red'}}>
-                    <ul class="pagination">
-                      <li class="page-item disabled"  className="mr-2">
-                        <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setPrevCall(pre=>!pre)}>Previous</button>
-                      </li>
-                      <li class="page-item"  className="mr-2">
-                        <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)}>{currentPage}</button></li>
-                      <li class="page-item">
-                        <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setNextCall(pre=>!pre)}>Next</button>
-                      </li>
-                    </ul>
-                  </nav>
-              </div>
-        </table>
+      <div>
+          <Paper sx={{ overflow: 'scroll', height:'50vh', flexDirection:"column", top:'300px'}} className="bg-light m-4 h-100 d-flex align-items-center justify-content-center">
+            <TableContainer sx={{ maxHeight: '70vh'}} >
+              <Table stickyHeader aria-label="sticky table" >
+                  <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                  </TableHead>
+                <TableBody>
+                  {data
+                    .slice()
+                    .map((row) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                          {columns.map((column) => {
+                            const value = row[column.id];
+                            return (
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === 'number'
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              
+              </Table>
+              
+            </TableContainer>
+            <div className='pagination mr-4 mt-2'>
+             <nav aria-label="Page navigation example" style={{alignItems:'left!important', border:'red'}}>
+               <ul class="pagination">
+                 <li class="page-item disabled"  className="mr-2">
+                   <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setPrevCall(pre=>!pre)}>Previous</button>
+                 </li>
+                 <li class="page-item"  className="mr-2">
+                   <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)}>{currentPage}</button></li>
+                 <li class="page-item">
+                   <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setNextCall(pre=>!pre)}>Next</button>
+                 </li>
+               </ul>
+             </nav>
+         </div>
+          </Paper>
       </div>
       }
-    </>
+  </div>
   );
 }

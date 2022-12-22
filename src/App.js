@@ -6,7 +6,6 @@ import Navbar from './components/Navbar';
 import Company from './components/company/Company';
 import CompanyListing from './components/company/CompanyListing';
 
-
 function App() {
   const user = localStorage.getItem('user')
   const isloggedIn = () => {
@@ -18,9 +17,11 @@ function App() {
   }
   return (
     <div className="App">
+      
       <header className="App-header">
         <Navbar/>
-      <div className="">
+      </header>
+      <div>
         <Routes>
             <Route path="/register" element={<Register />} />: ''
         </Routes>
@@ -28,13 +29,13 @@ function App() {
             <Route path="/login" element={<Login />} />: ''
         </Routes>
         <Routes>
-            <Route path="/add-company" element={<Company />} />: ''
+            <Route path="/add-company" element={<Company/>} />: ''
         </Routes>
-        <Routes>
-            <Route path="/companies" element={<CompanyListing />} />: ''
-        </Routes>
+              <Routes>
+                    <Route path="/companies" element={<CompanyListing/>} />: ''
+              </Routes>
       </div> 
-      </header>
+
     </div>
   );
 }

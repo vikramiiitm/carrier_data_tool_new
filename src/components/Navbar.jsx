@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light separated"
-      style={{ background: "#f7f7f7" }}
+      style={{ background: "#f7f7f7", marginTop:'0px'}}
     >
       <img
         src={require("../assets/logo_CDT.png")}

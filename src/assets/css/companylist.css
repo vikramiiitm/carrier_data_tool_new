@@ -1,0 +1,27 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    /* gap: 10px; */
+    background-color: #2196F3;
+    padding: 10px;
+  }
+
+
+  @media (min-width: 500px) {
+    .sidebar {
+        grid-row:1/4;
+        grid-column:1/2
+    }
+    .searchbox {
+        grid-row:1/2;
+        grid-column:2/3
+    }
+    .tablelist {
+        grid-row:2/3;
+        grid-column:2/3
+    }
+    .tablepagination {
+        grid-row:3/4;
+        grid-column:2/3
+    }
+  }
