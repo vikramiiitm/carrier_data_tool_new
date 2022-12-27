@@ -7,6 +7,7 @@ import { authHeader } from "../../service/auth-headers";
 import { useLocation } from "react-router-dom";
 
 import NavbarSide from "../NavbarSide";
+import '../../assets/css/companylist.css'
 
 
 import Paper from '@mui/material/Paper';
@@ -32,6 +33,11 @@ export default function CompanyListing() {
   const [callNext,setNextCall]=useState(false);
   const [callPrev,setPrevCall]=useState(false);
   const [currentPage, setCUrrentPage] = useState();
+  const [lastPage, setLastPage] = useState();
+
+  const [cargoCarried, setCargoCarried] = useState('');
+  const [basicThreshold, setBasicThreshold] = useState();
+  // const [basics,]
 
   // console.log(JSON.stringify(user.access))
   // const isLoggedIn = JSON.stringify(user.data)
@@ -80,6 +86,9 @@ export default function CompanyListing() {
       if (result?.data?.current){
         setCUrrentPage(result.data.current)
       }
+      if (result?.data?.lastPage){
+        setLastPage(result.data.lastPage)
+      }
     })();
   }, []);
 
@@ -127,41 +136,11 @@ export default function CompanyListing() {
       label: "State",
       id: "state",
     },
-  
-    // {
-    //   Header: "MC Number",
-    //   accessor: "motor_carrier_number",
-    // },
-    // {
-    //   Header: "Incorporation date",
-    //   accessor: "incorporation_date",
-    // },
-    // {
-    //   Header: "Active",
-    //   accessor: "is_active",
-    // },
-
   ];
   // THis code is very important if removed table will disappear
   const columns = useMemo(() => COLUMNS, []);
   // console.log(data);
 
-
-  
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      prepareRow,
-      rows,
-      state: { pageIndex, pageSize },
-    } = useTable(
-      {
-        columns,
-        data,
-      }
-    )
-  
 
   const onChange = (e, field) => {
     const value = e.target.value;
@@ -169,7 +148,7 @@ export default function CompanyListing() {
   };
 
   const filterlist = () => {
-      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}`,  {headers: authHeader()})
+      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}`,  {headers: authHeader()})
   }
 
 
@@ -178,7 +157,7 @@ export default function CompanyListing() {
     console.log("change the page")
     console.log('test next: ', next)
     const paginationHandler = async () => {
-      if (next!==undefined){
+      if (next!==undefined && next !==null){
         let response = await axios.get(next, {Header: authHeader})
         let temp = flatData(response.data.results)
         setData(temp)
@@ -190,6 +169,9 @@ export default function CompanyListing() {
         }
         if (response?.data?.current){
           setCUrrentPage(response.data.current)
+        }
+        if (response?.data?.lastPage){
+          setLastPage(response.data.lastPage)
         }
         console.log('response; ', response)
       }
@@ -213,6 +195,9 @@ export default function CompanyListing() {
         }
         if (response?.data?.current){
           setCUrrentPage(response.data.current)
+        }
+        if (response?.data?.lastPage){
+          setLastPage(response.data.lastPage)
         }
         console.log('response; ', response)
       }
@@ -242,18 +227,130 @@ export default function CompanyListing() {
       if (response?.data?.current){
         setCUrrentPage(response.data.current)
       }
+      if (response?.data?.lastPage){
+        setLastPage(response.data.lastPage)
+      }
     })
   }
 
   return (
     <div>
-      <div style={{width:'20%', float:'left', height:'100vh'}} >
-        <NavbarSide/>
+      {console.log({'next:': next})}
+      <div className='side-filter' style={{width:'25%', float:'left', height:'100vh'}} >
+        <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center pt-2' style={{background:'#f7f7f7'}}>
+          <div className='ml-2 row'>
+            <div className='col'>Advanced Filters</div>
+            <form className='form-group row' onSubmit={e => onsubmit(e)}>
+                <div className="form-label col-xs-3">Cargo Carried
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="cargoCarried"
+                      name="cargoCarried"
+                      value={cargoCarried}
+                      placeholder='Cargo Carried'
+                      onChange={(e) => onChange(e, setCargoCarried)}
+                    />
+                </div>
+                <div className="form-label buttons">Basics Threshold
+                  <div className="action_btn">
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="basicThreshold"
+                        name="basicThreshold"
+                        value={basicThreshold}
+                        placeholder='Basics Threshold'
+                        onChange={(e) => onChange(e, setBasicThreshold)}
+                      />
+                  </div>
+                </div>
+                <div className="form-label col-xs-3">Field1
+                    <input
+                      type="legal_name"
+                      className="form-control"
+                      id="legal_name"
+                      name="legal_name"
+                      value={legalName}
+                      placeholder='Legal Name'
+                      onChange={(e) => onChange(e, setLegalName)}
+                    />
+                </div>
+                <div className="form-label col-xs-3">Field1
+                    <input
+                      type="legal_name"
+                      className="form-control"
+                      id="legal_name"
+                      name="legal_name"
+                      value={legalName}
+                      placeholder='Legal Name'
+                      onChange={(e) => onChange(e, setLegalName)}
+                    />
+                </div>
+                <div className="form-label col-xs-3">Field1
+                    <input
+                      type="legal_name"
+                      className="form-control"
+                      id="legal_name"
+                      name="legal_name"
+                      value={legalName}
+                      placeholder='Legal Name'
+                      onChange={(e) => onChange(e, setLegalName)}
+                    />
+                </div>
+                <div className="form-label col-xs-3">Field1
+                    <input
+                      type="legal_name"
+                      className="form-control"
+                      id="legal_name"
+                      name="legal_name"
+                      value={legalName}
+                      placeholder='Legal Name'
+                      onChange={(e) => onChange(e, setLegalName)}
+                    />
+                </div>
+                <div className="form-label col-xs-3">Field1
+                    <input
+                      type="legal_name"
+                      className="form-control"
+                      id="legal_name"
+                      name="legal_name"
+                      value={legalName}
+                      placeholder='Legal Name'
+                      onChange={(e) => onChange(e, setLegalName)}
+                    />
+                </div>
+                <div className="form-label col-xs-3">Field1
+                    <input
+                      type="legal_name"
+                      className="form-control"
+                      id="legal_name"
+                      name="legal_name"
+                      value={legalName}
+                      placeholder='Legal Name'
+                      onChange={(e) => onChange(e, setLegalName)}
+                    />
+                </div>
+                <div className="form-label col-xs-3 mb-1">Field1
+                    <input
+                      type="legal_name"
+                      className="form-control"
+                      id="legal_name"
+                      name="legal_name"
+                      value={legalName}
+                      placeholder='Legal Name'
+                      onChange={(e) => onChange(e, setLegalName)}
+                    />
+                </div>
+            </form>
+          </div>
+        </div>
       </div>
+
+
       <div
         className="bg-light m-4 d-flex align-items-center justify-content-center p-2"
-        style={{ "background-color": "#f7f7f7", overflow:'hidden'}}
-      >
+        style={{ "background-color": "#f7f7f7", overflow:'hidden'}}>
         <form className="row d-flex align-items-center justify-content-center p-2 m-1" onSubmit={e => onsubmit(e)} >
           <div className="col-sm-2 d-flex align-items-center justify-content-center"> Filter Companies:</div>
           <div className="col-sm-2 col-md-2">
@@ -369,6 +466,8 @@ export default function CompanyListing() {
                  </li>
                  <li class="page-item"  className="mr-2">
                    <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)}>{currentPage}</button></li>
+                   <li class="page-item"  className="mr-2"> <span style={{border:'1px', color:'#ff6600'}} className="mr-2">of</span> 
+                   <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)}>{lastPage}</button></li>
                  <li class="page-item">
                    <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setNextCall(pre=>!pre)}>Next</button>
                  </li>
