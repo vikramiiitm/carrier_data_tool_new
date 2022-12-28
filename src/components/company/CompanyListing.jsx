@@ -4,16 +4,17 @@ import { useMemo } from "react";
 import axios from "axios";
 import { getCompanyService } from "../../service/CompanyService/Company";
 import { authHeader } from "../../service/auth-headers";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 import NavbarSide from "../NavbarSide";
 import '../../assets/css/companylist.css'
 
+import { styled } from '@mui/material/styles';
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
@@ -37,8 +38,38 @@ export default function CompanyListing() {
 
   const [cargoCarried, setCargoCarried] = useState('');
   const [basicThreshold, setBasicThreshold] = useState();
-  // const [basics,]
 
+  const [migrantOp, setMigrantOp] = useState(false);
+  const [privateOp, setPrivateOp] = useState(false);
+  const [exemptOp, setExemptOp] = useState(false);
+  const [authorityOp, setAuthorityOp] = useState(false);
+  const [otherOp, setOtherOp] = useState(false);
+  const [minDriver, setMinDriver] = useState();
+  const [maxDriver, setMaxDriver] = useState();
+
+  let navigate = useNavigate();
+
+  // const [basics,]
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: '#ff6600',
+      color: theme.palette.common.white,
+      fontSize: 16,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
   // console.log(JSON.stringify(user.access))
   // const isLoggedIn = JSON.stringify(user.data)
 
@@ -73,6 +104,7 @@ export default function CompanyListing() {
   // Using useEffect to call the API once mounted and set the data
   useEffect(() => {
     (async () => {
+      console.log('called first company list 76')
       const result = await getCompanyService();
       let temp = flatData(result.data.results);
       setData(temp)
@@ -148,7 +180,8 @@ export default function CompanyListing() {
   };
 
   const filterlist = () => {
-      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}`,  {headers: authHeader()})
+      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}&privateOp=${privateOp}&migrantOp=${migrantOp}
+      &exemptOp=${exemptOp}&authorityOp=${authorityOp}&otherOp=${otherOp}`,  {headers: authHeader()})
   }
 
 
@@ -207,14 +240,16 @@ export default function CompanyListing() {
 
 
   
-
+const detailPage = (id) => {
+  navigate('/companiesDetail', {state:{'id':id}})
+}
 
 //  console.log("ankit kumar",data)
 
   async function onsubmit(e){
     e.preventDefault();
     console.log('InsideCOmpany submit');
-    await filterlist(legalName, name, dot)
+    await filterlist(legalName, name, dot, city)
     .then((response)=>{
       let temp = flatData(response.data.results)
       setData(temp)
@@ -238,10 +273,10 @@ export default function CompanyListing() {
       {console.log({'next:': next})}
       <div className='side-filter' style={{width:'25%', float:'left', height:'100vh'}} >
         <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center pt-2' style={{background:'#f7f7f7'}}>
-          <div className='ml-2 row'>
+          <div className='ml-2 row' style={{overflow:'hidden'}}>
             <div className='col'>Advanced Filters</div>
             <form className='form-group row' onSubmit={e => onsubmit(e)}>
-                <div className="form-label col-xs-3">Cargo Carried
+                 <div className="form-label col-xs-3">Cargo Carried
                     <input
                       type="text"
                       className="form-control"
@@ -252,96 +287,93 @@ export default function CompanyListing() {
                       onChange={(e) => onChange(e, setCargoCarried)}
                     />
                 </div>
-                <div className="form-label buttons">Basics Threshold
-                  <div className="action_btn">
+                    <br></br>
+                    
+                <div>
+                    <label for="name">
+                        Drivers:
+                    </label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="basicThreshold"
-                        name="basicThreshold"
-                        value={basicThreshold}
-                        placeholder='Basics Threshold'
-                        onChange={(e) => onChange(e, setBasicThreshold)}
-                      />
-                  </div>
-                </div>
-                <div className="form-label col-xs-3">Field1
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="authority"
+                      name="minDriver"
+                      value={minDriver}
+                      placeholder='Min Driver'
+                      onChange={(e) => onChange(e, setMinDriver)}/> to
                     <input
-                      type="legal_name"
-                      className="form-control"
-                      id="legal_name"
-                      name="legal_name"
-                      value={legalName}
-                      placeholder='Legal Name'
-                      onChange={(e) => onChange(e, setLegalName)}
-                    />
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="authority"
+                      name="maxDriver"
+                      value={maxDriver}
+                      placeholder='Max Driver'
+                      onChange={(e) => onChange(e, setMaxDriver)}/>
+                    <br></br>
                 </div>
-                <div className="form-label col-xs-3">Field1
-                    <input
-                      type="legal_name"
-                      className="form-control"
-                      id="legal_name"
-                      name="legal_name"
-                      value={legalName}
-                      placeholder='Legal Name'
-                      onChange={(e) => onChange(e, setLegalName)}
-                    />
+                <div>
+                    <br/>
+                    <h6 className='col'>CLASSIFICATION</h6>
+                    
+                    <input 
+                      type="checkbox" 
+                      id="authority"
+                      name="authorityOp"
+                      value={authorityOp}
+                      onChange={(e) => onChange(e, setAuthorityOp(!authorityOp))}/>
+                      <label>Authorized For Hire</label><br></br>
+
+                    <input 
+                      type="checkbox" 
+                      id="Exempt"
+                      name="exemptOp"
+                      value={exemptOp}
+                      onChange={(e) => onChange(e, setExemptOp(!exemptOp))}/>
+                    <label>Exempt for Hire</label><br></br>
+
+                    <input 
+                      type="checkbox" 
+                      id="Private"
+                      name="privateOp"
+                      value={privateOp}
+                      onChange={(e) => onChange(e, setPrivateOp(!privateOp))}></input>
+                    <label>Private (Property)</label><br></br>
+
+                    <input 
+                      type="checkbox" 
+                      id="migrant"
+                      name="migrantOp"
+                      value={migrantOp}
+                      onChange={(e) => onChange(e, setMigrantOp(!migrantOp))}></input>
+                    <label>Migrant</label><br></br>
+
+                    {/* <input type="checkbox" id="usmail"></input>
+                    <label>U.S. Mail</label><br></br>
+
+                    <input type="checkbox" id="Federal"></input>
+                    <label>Federal Government</label><br></br>
+
+                    <input type="checkbox" id="state"></input>
+                    <label>State Government</label><br></br>
+
+                    <input type="checkbox" id="local"></input>
+                    <label>Local Government</label><br></br>
+
+                    <input type="checkbox" id="indian"></input>
+                    <label>Indian Nation</label><br></br> */}
+
+                    <input 
+                      type="checkbox" 
+                      id="other"
+                      name="otherOp"
+                      value={otherOp}
+                      onChange={(e) => onChange(e, setOtherOp(!otherOp))}></input>
+                    <label>Other</label><br></br>
+                    <br></br>
                 </div>
-                <div className="form-label col-xs-3">Field1
-                    <input
-                      type="legal_name"
-                      className="form-control"
-                      id="legal_name"
-                      name="legal_name"
-                      value={legalName}
-                      placeholder='Legal Name'
-                      onChange={(e) => onChange(e, setLegalName)}
-                    />
-                </div>
-                <div className="form-label col-xs-3">Field1
-                    <input
-                      type="legal_name"
-                      className="form-control"
-                      id="legal_name"
-                      name="legal_name"
-                      value={legalName}
-                      placeholder='Legal Name'
-                      onChange={(e) => onChange(e, setLegalName)}
-                    />
-                </div>
-                <div className="form-label col-xs-3">Field1
-                    <input
-                      type="legal_name"
-                      className="form-control"
-                      id="legal_name"
-                      name="legal_name"
-                      value={legalName}
-                      placeholder='Legal Name'
-                      onChange={(e) => onChange(e, setLegalName)}
-                    />
-                </div>
-                <div className="form-label col-xs-3">Field1
-                    <input
-                      type="legal_name"
-                      className="form-control"
-                      id="legal_name"
-                      name="legal_name"
-                      value={legalName}
-                      placeholder='Legal Name'
-                      onChange={(e) => onChange(e, setLegalName)}
-                    />
-                </div>
-                <div className="form-label col-xs-3 mb-1">Field1
-                    <input
-                      type="legal_name"
-                      className="form-control"
-                      id="legal_name"
-                      name="legal_name"
-                      value={legalName}
-                      placeholder='Legal Name'
-                      onChange={(e) => onChange(e, setLegalName)}
-                    />
-                </div>
+
             </form>
           </div>
         </div>
@@ -421,38 +453,28 @@ export default function CompanyListing() {
           <Paper sx={{ overflow: 'scroll', height:'50vh', flexDirection:"column", top:'300px'}} className="bg-light m-4 h-100 d-flex align-items-center justify-content-center">
             <TableContainer sx={{ maxHeight: '70vh'}} >
               <Table stickyHeader aria-label="sticky table" >
-                  <TableHead>
+              {/* <Table sx={{ minWidth: 700 }} aria-label="customized table"> */}
+                <TableHead>
                   <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{minWidth: column.minWidth }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
+                    <StyledTableCell>Legal Name</StyledTableCell>
+                    <StyledTableCell align="right">Dot</StyledTableCell>
+                    <StyledTableCell align="right">Name</StyledTableCell>
+                    <StyledTableCell align="right">City</StyledTableCell>
+                    <StyledTableCell align="right">State</StyledTableCell>
                   </TableRow>
-                  </TableHead>
+                </TableHead>
                 <TableBody>
-                  {data
-                    .slice()
-                    .map((row) => {
-                      return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === 'number'
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
+                  {data.map((row) => (
+                    <StyledTableRow key={row.id}>
+                      <StyledTableCell type='button' onClick={(e)=>detailPage(row.id)} component="th" scope="row">
+                        {row.legal_name}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">{row.dot}</StyledTableCell>
+                      <StyledTableCell align="right">{row.dba}</StyledTableCell>
+                      <StyledTableCell align="right">{row.city}</StyledTableCell>
+                      <StyledTableCell align="right">{row.state}</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
                 </TableBody>
               
               </Table>

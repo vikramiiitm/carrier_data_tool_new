@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Navbar from './components/Navbar';
 import Company from './components/company/Company';
 import CompanyListing from './components/company/CompanyListing';
+import CompanyDetail from './components/company/CompanyDetail';
 
 function App() {
   const user = localStorage.getItem('user')
@@ -31,9 +32,12 @@ function App() {
         <Routes>
             <Route path="/add-company" element={<Company/>} />: ''
         </Routes>
-              <Routes>
-                    <Route path="/companies" element={<CompanyListing/>} />: ''
-              </Routes>
+        <Routes>
+              <Route path="/companies" element={<CompanyListing/>} />: ''
+        </Routes>
+        <Routes>
+              <Route path="/companiesDetail" element={<CompanyDetail/>} />: ''
+        </Routes>
       </div> 
 
     </div>
