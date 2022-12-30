@@ -1,0 +1,145 @@
+
+  body {
+    background-color: rgb(238, 233, 233);
+   
+  }
+  .hideElement{
+    display: none;
+  }
+  .navbar{
+    display: flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    
+  }
+  .nav{
+    width: 100%;
+    margin-left: -40px;
+    background-color: white;
+  }
+  .heading_active {
+    color: white;
+  }
+  
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    list-style: none;
+  }
+  nav ul li {
+    color: rgb(22, 20, 20);
+    padding: 7px 25px;
+    background-color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  nav ul li a{
+    list-style: none;
+    color: black;
+    text-decoration: none;
+  }
+  nav ul li div.active{
+    list-style: none;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+  }
+  nav ul li:hover{
+    background-color: rgb(246, 116, 10);
+    color: white;
+  }
+  nav ul li.active {
+    background-color: rgb(246, 116, 10) ;
+    color: white;
+  }
+  .download p{
+    background-color: rgb(246, 116, 10) ;
+    font-size: 18px;
+    color: white;
+    padding: 7px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+
+  }
+  .download p:hover{
+    color: white;
+    background-color: orange;
+
+  }
+
+  
+  .heading{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: white;
+    letter-spacing: 0.5px;
+    
+  }
+  .entities{
+    font-size: 15px;
+    margin-left: -10px;
+    color: rgb(128, 131, 131);
+  }
+  .entities ul{
+    list-style: none;
+  }
+  .entityDetails{
+    font-size: 15px;
+    /* padding-top:2px ; */
+    font-weight: bold;
+  }
+  .entityDetails ul {
+    list-style: none;
+  }
+  .basicDetails{
+    display: flex;
+    justify-content: space-between;
+    color: rgb(107, 97, 97);
+    margin: 5px;
+  }
+.categories{
+  display: flex;
+  flex-wrap: wrap;
+justify-content: space-between;
+  color: white;
+
+  
+}
+.category{
+  height: 200px;
+  width: 150px;
+  background-color: rgb(235, 104, 10);
+}
+
+.service{
+  background-color: rgb(235, 104, 10);
+  width: 100%;
+  padding: 1px 2px;
+  margin-top: 5px;
+  color: white;
+  justify-content: center;
+  text-align: center;
+}
+.footer{
+  display: flex;
+  width: 60%;
+}
+.footerDetail{
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+.funderline{
+  height: 3px;
+  width: 300px;
+  background-color: orange;
+}
+.sunderline{
+  height: 3px;
+  width: 200px;
+  background-color: orange;
+}

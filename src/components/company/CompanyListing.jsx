@@ -47,13 +47,20 @@ export default function CompanyListing() {
   const [minDriver, setMinDriver] = useState();
   const [maxDriver, setMaxDriver] = useState();
 
+  const [totalInspectionMin, setTotalInspectionMin] = useState();
+  const [totalInspectionMax, setTotalInspectionMax] = useState();
+  const [driverInspectionMin, setDriverInspectionMin] = useState();
+  const [driverInspectionMax, setDriverInspectionMax] = useState();
+  const [VehicleInspectionMin, setVehicleInspectionMin] = useState();
+  const [VehicleInspectionMax, setVehicleInspectionMax] = useState();
+
   let navigate = useNavigate();
 
   // const [basics,]
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#ff6600',
-      color: theme.palette.common.white,
+      // backgroundColor: 'none',
+      color: theme.palette.common.black,
       fontSize: 16,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -181,7 +188,8 @@ export default function CompanyListing() {
 
   const filterlist = () => {
       return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}&privateOp=${privateOp}&migrantOp=${migrantOp}
-      &exemptOp=${exemptOp}&authorityOp=${authorityOp}&otherOp=${otherOp}`,  {headers: authHeader()})
+      &exemptOp=${exemptOp}&authorityOp=${authorityOp}&otherOp=${otherOp}&minInsp=${totalInspectionMin}&maxInsp=${totalInspectionMax}&vehInspMin=${VehicleInspectionMin}&vehInspMax=${VehicleInspectionMax}
+      &driverInspMin=${driverInspectionMin}&driverInspMax=${driverInspectionMax}`,  {headers: authHeader()})
   }
 
 
@@ -271,12 +279,12 @@ const detailPage = (id) => {
   return (
     <div>
       {console.log({'next:': next})}
-      <div className='side-filter' style={{width:'25%', float:'left', height:'100vh'}} >
-        <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center pt-2' style={{background:'#f7f7f7'}}>
-          <div className='ml-2 row' style={{overflow:'hidden'}}>
+      <div className='side-filter' style={{width:'23%', float:'left'}} >
+        <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center pt-2' style={{background:'#f7f7f7', overflow:'scroll', fontSize:'14px'}}>
+          <div className='ml-2 row' style={{overflow:'scroll', minWidth:'25%'}}>
             <div className='col'>Advanced Filters</div>
             <form className='form-group row' onSubmit={e => onsubmit(e)}>
-                 <div className="form-label col-xs-3">Cargo Carried
+                 <div className="form-label">Cargo Carried
                     <input
                       type="text"
                       className="form-control"
@@ -315,7 +323,7 @@ const detailPage = (id) => {
                 </div>
                 <div>
                     <br/>
-                    <h6 className='col'>CLASSIFICATION</h6>
+                    <div className='form-label'>Classification</div>
                     
                     <input 
                       type="checkbox" 
@@ -373,7 +381,70 @@ const detailPage = (id) => {
                     <label>Other</label><br></br>
                     <br></br>
                 </div>
-
+                
+                <div>
+                    <div className='header'>Inspection</div>
+                    <div>Total Inspection</div>
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="authority"
+                      name="minDriver"
+                      value={totalInspectionMin}
+                      placeholder='Min'
+                      onChange={(e) => onChange(e, setTotalInspectionMin)}/> to
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="totalInspection"
+                      name="totalInspectionMax"
+                      value={totalInspectionMax}
+                      placeholder='Max'
+                      onChange={(e) => onChange(e, setTotalInspectionMax)}/>
+                    <br></br>
+                    <div>Driver Inspection</div>
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="driverInspectionMin"
+                      name="driverInspectionMin"
+                      value={driverInspectionMin}
+                      placeholder='Min'
+                      onChange={(e) => onChange(e, setDriverInspectionMin)}/> to
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="driverInspectionMax"
+                      name="driverInspectionMax"
+                      value={driverInspectionMax}
+                      placeholder='Max'
+                      onChange={(e) => onChange(e, setDriverInspectionMax)}/>
+                    <br></br>
+                    <div>Vehicle Inspection</div>
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="VehicleInspectionMin"
+                      name="VehicleInspectionMin"
+                      value={VehicleInspectionMin}
+                      placeholder='Min'
+                      onChange={(e) => onChange(e, setVehicleInspectionMin)}/> to
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="VehicleInspectionMax"
+                      name="VehicleInspectionMax"
+                      value={VehicleInspectionMax}
+                      placeholder='Max'
+                      onChange={(e) => onChange(e, setVehicleInspectionMax)}/>
+                    <br></br>
+                </div>
             </form>
           </div>
         </div>
