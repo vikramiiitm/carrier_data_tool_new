@@ -29,5 +29,6 @@
         display: inline;
     }
   }
-
-
+.company_title:hover{
+  color: #ff6600;
+}

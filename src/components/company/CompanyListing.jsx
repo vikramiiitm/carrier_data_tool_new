@@ -326,6 +326,7 @@ const detailPage = (id) => {
                     <div className='form-label'>Classification</div>
                     
                     <input 
+                      className="mr-1"
                       type="checkbox" 
                       id="authority"
                       name="authorityOp"
@@ -334,6 +335,7 @@ const detailPage = (id) => {
                       <label>Authorized For Hire</label><br></br>
 
                     <input 
+                      className="mr-1"
                       type="checkbox" 
                       id="Exempt"
                       name="exemptOp"
@@ -342,6 +344,7 @@ const detailPage = (id) => {
                     <label>Exempt for Hire</label><br></br>
 
                     <input 
+                      className="mr-1"
                       type="checkbox" 
                       id="Private"
                       name="privateOp"
@@ -350,6 +353,7 @@ const detailPage = (id) => {
                     <label>Private (Property)</label><br></br>
 
                     <input 
+                      className="mr-1"
                       type="checkbox" 
                       id="migrant"
                       name="migrantOp"
@@ -373,6 +377,7 @@ const detailPage = (id) => {
                     <label>Indian Nation</label><br></br> */}
 
                     <input 
+                      className="mr-1"
                       type="checkbox" 
                       id="other"
                       name="otherOp"
@@ -527,7 +532,8 @@ const detailPage = (id) => {
               {/* <Table sx={{ minWidth: 700 }} aria-label="customized table"> */}
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell>Legal Name</StyledTableCell>
+                    <StyledTableCell align="left">Id</StyledTableCell>
+                    <StyledTableCell align="left">Legal Name</StyledTableCell>
                     <StyledTableCell align="right">Dot</StyledTableCell>
                     <StyledTableCell align="right">Name</StyledTableCell>
                     <StyledTableCell align="right">City</StyledTableCell>
@@ -537,7 +543,8 @@ const detailPage = (id) => {
                 <TableBody>
                   {data.map((row) => (
                     <StyledTableRow key={row.id}>
-                      <StyledTableCell type='button' onClick={(e)=>detailPage(row.id)} component="th" scope="row">
+                      <StyledTableCell align="left">{row.id}</StyledTableCell>
+                      <StyledTableCell className='company_title' type='button' onClick={(e)=>detailPage(row.id)} component="th" scope="row">
                         {row.legal_name}
                       </StyledTableCell>
                       <StyledTableCell align="right">{row.dot}</StyledTableCell>
