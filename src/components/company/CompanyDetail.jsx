@@ -35,14 +35,14 @@ export default function CompanyDetail() {
         // document.getElementById('operations').style.cssText = 'display:none'
         document.getElementById('inspection').style.cssText = 'display:none'
         document.getElementById('basics').style.cssText = 'display:none'
-        // document.getElementById('insurance').style.cssText = 'display:none'
+        document.getElementById('insurance').style.cssText = 'display:none'
         
         document.getElementById('detail_nav').classList.remove('active')
         document.getElementById('cargo_nav').classList.remove('active')
         // document.getElementById('operations_nav').classList.remove('active')
         document.getElementById('inspection_nav').classList.remove('active')
         document.getElementById('basics_nav').classList.remove('active')
-        // document.getElementById('insurance_nav').classList.remove('active')
+        document.getElementById('insurance_nav').classList.remove('active')
      
         document.getElementById(v1).style.cssText = 'display:flex'
         document.getElementById(v2).classList.add('active')
@@ -74,11 +74,11 @@ export default function CompanyDetail() {
                     <li type='button' id='basics_nav' onClick={()=>(displayElement(['basics', 'basics_nav']))}>
                         <div>Basics</div>
                     </li>
-                    {/* <li type='button' id='operations_nav' onClick={()=>(displayElement(['operations', 'operations_nav']))}>
-                        <div>Operations</div>
+                    <li type='button' id='insurance_nav' onClick={()=>(displayElement(['insurance', 'insurance_nav']))}>
+                        <div>Insurance</div>
                     </li>
 
-                    <li type='button' id='insurance_nav' onClick={()=>(displayElement(['insurance', 'insurance_nav']))}>
+                    {/* <li type='button' id='insurance_nav' onClick={()=>(displayElement(['insurance', 'insurance_nav']))}>
                         <div>Insurance</div>
                     </li> */}
                 </ul>
@@ -109,7 +109,7 @@ export default function CompanyDetail() {
                 <li>Na</li>
                 <li>{checkNull(data?.addresses[0]?.street)+' '+checkNull(data?.addresses[0]?.city)+' '+ checkNull(data?.addresses[0]?.state) + ', ' + checkNull(data?.addresses[0]?.country) + ', '+ checkNull(data?.addresses[0]?.zip_code)}</li>
                 <li>{checkNull(data?.addresses[0]?.street)+' '+checkNull(data?.addresses[0]?.city)+' '+ checkNull(data?.addresses[0]?.state) + ', ' + checkNull(data?.addresses[0]?.country) + ', '+ checkNull(data?.addresses[0]?.zip_code)}</li>
-                <li>{checkNull(data?.addresses[0]?.phone)}</li>
+                <li>{checkNull(data?.phone)}</li>
             </ul>
           </div>
 
@@ -271,7 +271,41 @@ export default function CompanyDetail() {
             </>
         )}
     </div>
+    
+    <div className="row heading cargo-carried p-4 m-4 mt-2" id='insurance' style={{display:'none',overflow:'hidden'}}>
+     
+     <div className="col-md-3 col-lg-3 entities">
+       <ul>
+           <li>Form</li>
+           <li>Type</li>
+           <li>Insurance Carrier</li>
+           <li>Policy/Surety</li>
+           <li>Coverage from</li>
+           <li>Coverage to</li>
+           <li>Effective Date from</li>
+           <li>Effective Date to</li>
+           <li>Status</li>
+       </ul>
+     </div>
+     <div className="col-md-3 col-lg-3 entityDetails">
+        {data?.insurance_history.map(item=>
+                <ul>
+                 <li>{item?.form}</li>
+                 <li>{item?.form}</li>
+                 <li>{item?.insurance_carrier}</li>
+                 <li>{item?.policy_surety}</li>
+                 <li>{item?.coverage_from}</li>
+                 <li>{item?.coverage_to}</li>
+                 <li>{item?.effective_date_from}</li>
+                 <li>{item?.effective_date_to}</li>               
+                 <li>{item?.status ? item?.status:'Na'}</li>
+             </ul>  
+        )}
+        </div >
+        <div className='col-6'>
 
+         </div>
+    </div>
 </div>
   )
 }

@@ -53,6 +53,15 @@ export default function CompanyListing() {
   const [driverInspectionMax, setDriverInspectionMax] = useState();
   const [VehicleInspectionMin, setVehicleInspectionMin] = useState();
   const [VehicleInspectionMax, setVehicleInspectionMax] = useState();
+  
+  const [totalCrashMax, settotalCrashMax] = useState();
+  const [totalCrashMin, settotalCrashMin] = useState();
+  const [fatalCrashMin, setfatalCrashMin] = useState();
+  const [fatalCrashMax, setfatalCrashMax] = useState();
+  const [towawayCrashMin, settowawayCrashMin] = useState();
+  const [towawayCrashMax, settowawayCrashMax] = useState();
+  const [injuryCrashMin, setinjuryCrashMin] = useState();
+  const [injuryCrashMax, setinjuryCrashMax] = useState();
 
   let navigate = useNavigate();
 
@@ -152,6 +161,8 @@ export default function CompanyListing() {
       tempCompany.dot = company.dot;
       tempCompany.is_active = company.is_active;
       tempCompany.dba = company.dba;
+      tempCompany.phone = company.phone;
+
       
       
       for(let address of company.addresses){
@@ -165,32 +176,6 @@ export default function CompanyListing() {
     return localCompanyList;
   }
 
-  const COLUMNS = [
-    {
-      label: "Legal Name",
-      id: "legal_name",
-    },
-    {
-      label: "Name",
-      id: "dba",
-    },
-    {
-      label: "DOT",
-      id: "dot",
-    },
-    {
-      label: "City",
-      id: "city",
-    },
-    {
-      label: "State",
-      id: "state",
-    },
-  ];
-  // THis code is very important if removed table will disappear
-  const columns = useMemo(() => COLUMNS, []);
-  // console.log(data);
-
 
   const onChange = (e, field) => {
     const value = e.target.value;
@@ -200,7 +185,7 @@ export default function CompanyListing() {
   const filterlist = () => {
       return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}&privateOp=${privateOp}&migrantOp=${migrantOp}
       &exemptOp=${exemptOp}&authorityOp=${authorityOp}&otherOp=${otherOp}&minInsp=${totalInspectionMin}&maxInsp=${totalInspectionMax}&vehInspMin=${VehicleInspectionMin}&vehInspMax=${VehicleInspectionMax}
-      &driverInspMin=${driverInspectionMin}&driverInspMax=${driverInspectionMax}`,  {headers: authHeader()})
+      &driverInspMin=${driverInspectionMin}&driverInspMax=${driverInspectionMax}&totalCrashMin=${totalCrashMin}&totalCrashMax=${totalCrashMax}&injuryCrashMin=${injuryCrashMin}&injuryCrashMax=${injuryCrashMax}&fatalCrashMin=${fatalCrashMin}&fatalCrashMax=${fatalCrashMax}&towawayCrashMin=${towawayCrashMin}&towawayCrashMax=${towawayCrashMax}`,  {headers: authHeader()})
   }
 
 
@@ -291,8 +276,8 @@ const detailPage = (id) => {
     <div>
       {console.log({'next:': next})}
       <div className='side-filter' style={{width:'23%', float:'left'}} >
-        <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center pt-2' style={{background:'#f7f7f7', overflow:'', fontSize:'16px'}}>
-          <div className='ml-2 row' style={{overflow:'scroll', minWidth:'25%'}}>
+        <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center' style={{background:'#f7f7f7', fontSize:'16px'}}>
+          <div className='ml-2 row' style={{overflow:'scroll', minWidth:'25%', height:'88.5vh'}}>
             <div className='col'>Advanced Filters</div>
             <form className='form-group row' onSubmit={e => onsubmit(e)}>
                  <div className="form-label">Cargo Carried
@@ -395,7 +380,6 @@ const detailPage = (id) => {
                       value={otherOp}
                       onChange={(e) => onChange(e, setOtherOp(!otherOp))}></input>
                     <label>Other</label><br></br>
-                    <br></br>
                 </div>
                 
                 <div>
@@ -461,6 +445,89 @@ const detailPage = (id) => {
                       onChange={(e) => onChange(e, setVehicleInspectionMax)}/>
                     <br></br>
                 </div>
+                <div>
+                    <div className='header mt-2'>Crashes</div>
+                    <div>Total Crash</div>
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="totalCrashMin"
+                      name="totalCrashMin"
+                      value={totalCrashMin}
+                      placeholder='Min'
+                      onChange={(e) => onChange(e, settotalCrashMin)}/> to
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="totalCrashMax"
+                      name="totalCrashMax"
+                      value={totalCrashMax}
+                      placeholder='Max'
+                      onChange={(e) => onChange(e, settotalCrashMax)}/>
+                    <br></br>
+                    <div>Injury Crash</div>
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="injuryCrashMin"
+                      name="injuryCrashMin"
+                      value={injuryCrashMin}
+                      placeholder='Min'
+                      onChange={(e) => onChange(e, setinjuryCrashMin)}/> to
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="injuryCrashMax"
+                      name="injuryCrashMax"
+                      value={injuryCrashMax}
+                      placeholder='Max'
+                      onChange={(e) => onChange(e, setinjuryCrashMax)}/>
+                    <br></br>
+                    <div>Fatal Crash</div>
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="fatalCrashMin"
+                      name="fatalCrashMin"
+                      value={fatalCrashMin}
+                      placeholder='Min'
+                      onChange={(e) => onChange(e, setfatalCrashMin)}/> to
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="fatalCrashMax"
+                      name="fatalCrashMax"
+                      value={fatalCrashMax}
+                      placeholder='Max'
+                      onChange={(e) => onChange(e, setfatalCrashMax)}/>
+                    <br></br>
+                    <div>Towaway Crash</div>
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}}
+                      type="number" 
+                      id="towawayCrashMin"
+                      name="towawayCrashMin"
+                      value={towawayCrashMin}
+                      placeholder='Min'
+                      onChange={(e) => onChange(e, settowawayCrashMin)}/> to
+                    <input
+                      className="ml-2" 
+                      style={{width:'55px'}} 
+                      type="number" 
+                      id="towawayCrashMax"
+                      name="towawayCrashMax"
+                      value={towawayCrashMax}
+                      placeholder='Max'
+                      onChange={(e) => onChange(e, settowawayCrashMax)}/>
+                    <br></br>
+                  </div>
             </form>
           </div>
         </div>
@@ -468,8 +535,8 @@ const detailPage = (id) => {
 
 
       <div
-        className="bg-light m-4 d-flex align-items-center justify-content-center p-2"
-        style={{ "background-color": "#f7f7f7", overflow:'hidden'}}>
+        className="bg-light m-3 d-flex align-items-center justify-content-center p-2"
+        style={{ "background-color": "#f7f7f7", overflow:'hidden', height:'10vh'}}>
         <form className="row d-flex align-items-center justify-content-center p-2 m-1" onSubmit={e => onsubmit(e)} >
           <div className="col-sm-2 d-flex align-items-center justify-content-center"> Filter Companies:</div>
           <div className="col-sm-2 col-md-2">
@@ -537,8 +604,8 @@ const detailPage = (id) => {
      {/* listing */}
       {isLoggedIn &&
       <div>
-          <Paper sx={{ overflow: 'scroll', height:'50vh', flexDirection:"column", top:'300px'}} className="bg-light m-4 h-100 d-flex align-items-center justify-content-center">
-            <TableContainer sx={{ maxHeight: '70vh'}} >
+          <Paper sx={{ overflow: '', height:'50vh', flexDirection:"column", top:'300px'}} className="bg-light mr-3 mt-2 h-100 d-flex align-items-center justify-content-center">
+            <TableContainer sx={{ maxHeight: '71vh'}} >
               <Table stickyHeader aria-label="sticky table" >
               {/* <Table sx={{ minWidth: 700 }} aria-label="customized table"> */}
                 <TableHead>
@@ -547,6 +614,7 @@ const detailPage = (id) => {
                     <StyledTableCell align="left">Legal Name</StyledTableCell>
                     <StyledTableCell align="right">Dot</StyledTableCell>
                     <StyledTableCell align="right">Name</StyledTableCell>
+                    <StyledTableCell align="right">Phone</StyledTableCell>
                     <StyledTableCell align="right">City</StyledTableCell>
                     <StyledTableCell align="right">State</StyledTableCell>
                   </TableRow>
@@ -560,6 +628,7 @@ const detailPage = (id) => {
                       </StyledTableCell>
                       <StyledTableCell align="right">{row.dot}</StyledTableCell>
                       <StyledTableCell align="right">{row.dba}</StyledTableCell>
+                      <StyledTableCell align="right">{row.phone}</StyledTableCell>
                       <StyledTableCell align="right">{row.city}</StyledTableCell>
                       <StyledTableCell align="right">{row.state}</StyledTableCell>
                     </StyledTableRow>
@@ -577,8 +646,8 @@ const detailPage = (id) => {
                  </li>
                  <li class="page-item"  className="mr-2">
                    <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)}>{currentPage}</button></li>
-                   <li class="page-item"  className="mr-2"> <span style={{border:'1px', color:'#ff6600'}} className="mr-2">of</span> 
-                   <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)}>{lastPage}</button></li>
+                   <li class="page-item"  className="mr-2"> <span style={{border:'1px', color:'#ff6600'}} className="mr-4">of</span> 
+                   <button style={{border:'1px', color:'#ff6600'}} disabled onClick={() =>setNextCall(pre=>!pre)} className='ml-2'>{lastPage}</button></li>
                  <li class="page-item">
                    <button style={{border:'1px solid #ff6600', color:'#ff6600'}} onClick={() =>setNextCall(pre=>!pre)}>Next</button>
                  </li>
