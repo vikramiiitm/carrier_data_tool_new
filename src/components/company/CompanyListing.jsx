@@ -99,9 +99,11 @@ export default function CompanyListing() {
       const user = JSON.parse(localStorage.getItem('user'))
       console.log(user)
       const access = user?.data?.access
+
       if (access ===undefined||access===null) {
 
           setIsLoggedIn(false)
+          navigate('/login')
       }
       else {
           setIsLoggedIn(true)
@@ -113,7 +115,16 @@ export default function CompanyListing() {
     (async () => {
       console.log('called first company list 76')
       const result = await getCompanyService();
+      
+      const user = JSON.parse(localStorage.getItem('user'))
+      if (user ===undefined||user===null) {
+
+        setIsLoggedIn(false)
+        navigate('/login')
+    }
+
       let temp = flatData(result.data.results);
+      console.log(`check login ${result}`)
       setData(temp)
       // assigning next of url in next var
       if (result?.data?.next){
@@ -280,7 +291,7 @@ const detailPage = (id) => {
     <div>
       {console.log({'next:': next})}
       <div className='side-filter' style={{width:'23%', float:'left'}} >
-        <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center pt-2' style={{background:'#f7f7f7', overflow:'scroll', fontSize:'14px'}}>
+        <div className=' ml-3 mr-4 d-flex align-items-center justify-content-center pt-2' style={{background:'#f7f7f7', overflow:'', fontSize:'16px'}}>
           <div className='ml-2 row' style={{overflow:'scroll', minWidth:'25%'}}>
             <div className='col'>Advanced Filters</div>
             <form className='form-group row' onSubmit={e => onsubmit(e)}>

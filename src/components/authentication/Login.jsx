@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate  } from 'react-router-dom';
 import { NavItem } from "reactstrap";
+import axios from "axios";
 
 
 import LoginService from '../../service/authentication/AuthService'
@@ -17,17 +18,24 @@ const Login = () => {
 
 
     useEffect(()=>{
-        console.log('inside')
-        const user = JSON.parse(localStorage.getItem('user'))
-        console.log(user)
-        const access = user?.data?.access
-        if (access ===undefined||access===null) {
-            console.log('ankit');
-            setIsLoggedIn(false)
-        }
-        else {
-            setIsLoggedIn(true)
-        }
+        (async () => {
+            console.log('inside')
+            const user = JSON.parse(localStorage.getItem('user'))
+            console.log(user)
+            const access = user?.data?.access
+    
+            // verify token
+            // let access_is_valid = await axios.post(`http://127.0.0.1:8000/api/account/token/`,{token:access})
+            // console.log(`Token is valid: ${access_is_valid}`)
+    
+            if (access ===undefined||access===null) {
+                console.log('');
+                setIsLoggedIn(false)
+            }
+            else {
+                setIsLoggedIn(true)
+            }
+        })();
     },[])
 
     console.log('isLoggedIn: ',isLoggedIn)

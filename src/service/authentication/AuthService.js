@@ -20,7 +20,6 @@ function LoginService(username, password){
         // here response status is ok
         console.log(JSON.stringify(response.data))
         store.dispatch(loginSuccess(response))
-        console.log(312312312)
         if(JSON.stringify(response.data)) {
             localStorage.setItem('user', JSON.stringify(response))
             console.log('service',JSON.parse(localStorage.getItem('user')).data);

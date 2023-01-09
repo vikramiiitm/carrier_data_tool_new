@@ -30,8 +30,8 @@
   }
   nav ul li {
     color: rgb(22, 20, 20);
-    padding: 7px 25px;
-    background-color: white;
+    /* padding: 7px 25px; */
+    /* background-color: white; */
     font-size: 18px;
     font-weight: bold;
     border-radius: 5px;
@@ -47,10 +47,10 @@
     color: rgb(255, 255, 255);
     text-decoration: none;
   }
-  nav ul li:hover{
+  /* nav ul li:hover{
     background-color: rgb(246, 116, 10);
     color: white;
-  }
+  } */
   nav ul li.active {
     background-color: rgb(246, 116, 10) ;
     color: white;
