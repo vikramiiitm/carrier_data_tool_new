@@ -10,6 +10,7 @@ import NavbarSide from "../NavbarSide";
 import '../../assets/css/companylist.css'
 
 import { styled } from '@mui/material/styles';
+import { baseURL } from "../../utils/base_url";
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -183,7 +184,7 @@ export default function CompanyListing() {
   };
 
   const filterlist = () => {
-      return axios.get(`http://127.0.0.1:8000/api/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}&privateOp=${privateOp}&migrantOp=${migrantOp}
+      return axios.get(`${baseURL}/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}&privateOp=${privateOp}&migrantOp=${migrantOp}
       &exemptOp=${exemptOp}&authorityOp=${authorityOp}&otherOp=${otherOp}&minInsp=${totalInspectionMin}&maxInsp=${totalInspectionMax}&vehInspMin=${VehicleInspectionMin}&vehInspMax=${VehicleInspectionMax}
       &driverInspMin=${driverInspectionMin}&driverInspMax=${driverInspectionMax}&totalCrashMin=${totalCrashMin}&totalCrashMax=${totalCrashMax}&injuryCrashMin=${injuryCrashMin}&injuryCrashMax=${injuryCrashMax}&fatalCrashMin=${fatalCrashMin}&fatalCrashMax=${fatalCrashMax}&towawayCrashMin=${towawayCrashMin}&towawayCrashMax=${towawayCrashMax}`,  {headers: authHeader()})
   }

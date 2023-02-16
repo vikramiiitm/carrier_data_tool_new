@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { authHeader } from '../../service/auth-headers';
 import detailCss from '../../assets/css/detailCSS.css'
-
+import { baseURL } from '../../utils/base_url';
 export default function CompanyDetail() {
 
 
@@ -16,7 +16,7 @@ export default function CompanyDetail() {
     useEffect(()=>{
         (async () => {
             console.log('Detail Page6')
-            let companyData = await axios.get(`http://127.0.0.1:8000/api/company/companies/${id}`, {headers:authHeader})
+            let companyData = await axios.get(`${baseURL}/company/companies/${id}`, {headers:authHeader})
             setData(companyData.data)
           })();
     },[])

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import {loginPending, loginSuccess} from '../../actions/auth'
 import { store } from "../../store.js";
+import { baseURL } from "../../utils/base_url";
+
 const config = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'

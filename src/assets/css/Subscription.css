@@ -1,0 +1,168 @@
+body{
+    margin: 0;
+    background-color: #e3e2e2;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.subheader{
+    height: 70px;
+    width: 100%;
+    background-color: white;
+   box-shadow: 0px 0px 8px 0;
+    display: flex;
+   
+    justify-content: space-between;
+}
+.subtitle{
+    font-size: 20px;
+    font-weight: bold;
+}
+.subheaderFirst{
+    display: flex;
+    justify-content: space-between;
+}
+.subheaderSecond{
+    display: flex;
+    justify-content: space-between;
+   text-align: center;
+   align-items: center;
+   margin:10px;
+ 
+  
+}
+.subsearch{
+   border: none;
+    padding: 10px 10px;
+    border: 0.5px solid rgb(204, 200, 200);
+    border-radius: 3px; 
+}
+.subinputIcon{
+    display: flex;
+    border: 0.5px solid rgb(209, 204, 204);
+    border-radius: 5px;
+    margin-right: 20px;
+}
+.subgoIcon{
+    display: flex;
+    background-color: rgb(254, 129, 12);
+    width: 50px;
+    height: 30px;
+   font-size: 16px;
+    padding-top: 13px;
+    padding-left: 5px;
+   border: none;
+   color: white;
+   
+   border: 0.5px solid rgb(95, 94, 94);
+}
+.subaccount a{
+    margin: 5px;
+   padding: 5px;
+    color: black;
+    margin: 2px;
+}
+.subtitleiconimg{
+  padding: 0px;
+  margin: 8px 25px ;
+  height: 50px;
+  width: 80px;
+    
+}
+.subcontainer{
+    border-radius: 5px;
+    margin: auto;
+    width: 80%;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+.subtabledetails{
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    
+}
+
+.subtable{
+    width: 60%;
+    margin: auto;
+    border: 1px solid rgb(20, 20, 20);
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 20px;
+    table-layout: fixed;
+    height: auto;
+}
+.subcompanyTable2 :hover {
+    color: rgb(254, 129, 12);
+}
+.subcompanyTable3 :hover {
+    color: rgb(254, 129, 12);
+}
+.subtabletd th, td{
+    padding: 10px;
+}
+
+
+.subsecondcontainer{
+    margin: auto;
+    width: 80%;
+    background-color: white;
+   border-radius: 5px;
+}
+.subdetail{
+   padding-top: 15px;
+   padding-left: 20px;
+   font-size: 20px;
+   font-weight: 600;
+}
+.subtotalpayable{
+    font-weight: 700;
+    font-size: 17px;
+    
+}
+.subtotalrupee{
+    font-weight: bold;
+    font-size: 17px;
+    
+}
+.subfee{
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.subline{
+    width: 97%;
+    height: 1.5px;
+    background-color: rgb(29, 28, 28);
+    margin: auto;
+    margin-bottom: 5px;
+}
+.subbuttons{
+    padding: 18px;
+    display: flex;
+    justify-content: flex-end;
+}
+.subcanclebutton{
+    background-color: rgb(240, 235, 235);
+    border-radius: 10px;
+    border: none;
+    padding: 8px 20px;
+    margin: 5px;
+    color: rgb(86, 84, 84);
+    height: 40px;
+    cursor: pointer;
+}
+.subsubscribebutton{
+    background-color: rgb(254, 129, 12);
+  border-radius: 10px;
+  padding: 10px 25px;
+  border: none;
+  margin-left:5px ;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
