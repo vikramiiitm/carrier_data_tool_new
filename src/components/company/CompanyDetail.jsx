@@ -304,7 +304,9 @@ export default function CompanyDetail() {
         <div className='col-6'>
 
         </div>
-        <hr />
+        <div>
+            <hr />
+        </div>
         </>
     )}
     </div>
