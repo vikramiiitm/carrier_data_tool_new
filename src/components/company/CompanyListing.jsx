@@ -186,7 +186,8 @@ export default function CompanyListing() {
   const filterlist = () => {
       return axios.get(`${baseURL}/company/companies?legal_name=${legalName}&dba=${name}&dot=${dot}&city=${city}&cargo=${cargoCarried}&privateOp=${privateOp}&migrantOp=${migrantOp}
       &exemptOp=${exemptOp}&authorityOp=${authorityOp}&otherOp=${otherOp}&minInsp=${totalInspectionMin}&maxInsp=${totalInspectionMax}&vehInspMin=${VehicleInspectionMin}&vehInspMax=${VehicleInspectionMax}
-      &driverInspMin=${driverInspectionMin}&driverInspMax=${driverInspectionMax}&totalCrashMin=${totalCrashMin}&totalCrashMax=${totalCrashMax}&injuryCrashMin=${injuryCrashMin}&injuryCrashMax=${injuryCrashMax}&fatalCrashMin=${fatalCrashMin}&fatalCrashMax=${fatalCrashMax}&towawayCrashMin=${towawayCrashMin}&towawayCrashMax=${towawayCrashMax}`,  {headers: authHeader()})
+      &driverInspMin=${driverInspectionMin}&driverInspMax=${driverInspectionMax}&totalCrashMin=${totalCrashMin}&totalCrashMax=${totalCrashMax}&injuryCrashMin=${injuryCrashMin}&injuryCrashMax=${injuryCrashMax}
+      &fatalCrashMin=${fatalCrashMin}&fatalCrashMax=${fatalCrashMax}&towawayCrashMin=${towawayCrashMin}&towawayCrashMax=${towawayCrashMax}&minDriver=${minDriver}&maxDriver=${maxDriver}`,  {headers: authHeader()})
   }
 
 

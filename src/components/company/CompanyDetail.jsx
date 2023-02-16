@@ -273,38 +273,40 @@ export default function CompanyDetail() {
     </div>
     
     <div className="row heading cargo-carried p-4 m-4 mt-2" id='insurance' style={{display:'none',overflow:'hidden'}}>
-     
-     <div className="col-md-3 col-lg-3 entities">
-       <ul>
-           <li>Form</li>
-           <li>Type</li>
-           <li>Insurance Carrier</li>
-           <li>Policy/Surety</li>
-           <li>Coverage from</li>
-           <li>Coverage to</li>
-           <li>Effective Date from</li>
-           <li>Effective Date to</li>
-           <li>Status</li>
-       </ul>
-     </div>
-     <div className="col-md-3 col-lg-3 entityDetails">
-        {data?.insurance_history.map(item=>
-                <ul>
-                 <li>{item?.form}</li>
-                 <li>{item?.form}</li>
-                 <li>{item?.insurance_carrier}</li>
-                 <li>{item?.policy_surety}</li>
-                 <li>{item?.coverage_from}</li>
-                 <li>{item?.coverage_to}</li>
-                 <li>{item?.effective_date_from}</li>
-                 <li>{item?.effective_date_to}</li>               
-                 <li>{item?.status ? item?.status:'Na'}</li>
-             </ul>  
-        )}
+    {data?.insurance_history.map(item=>
+    <>
+        <div className="col-md-3 col-lg-3 entities">
+        <ul>
+            <li>Form</li>
+            <li>Type</li>
+            <li>Insurance Carrier</li>
+            <li>Policy/Surety</li>
+            <li>Coverage from</li>
+            <li>Coverage to</li>
+            <li>Effective Date from</li>
+            <li>Effective Date to</li>
+            <li>Status</li>
+        </ul>
+        </div>
+        <div className="col-md-3 col-lg-3 entityDetails">
+                    <ul>
+                    <li>{item?.form}</li>
+                    <li>{item?.form}</li>
+                    <li>{item?.insurance_carrier}</li>
+                    <li>{item?.policy_surety}</li>
+                    <li>{item?.coverage_from}</li>
+                    <li>{item?.coverage_to}</li>
+                    <li>{item?.effective_date_from}</li>
+                    <li>{item?.effective_date_to}</li>               
+                    <li>{item?.status ? item?.status:'Na'}</li>
+                </ul>  
         </div >
         <div className='col-6'>
 
-         </div>
+        </div>
+        <hr />
+        </>
+    )}
     </div>
 </div>
   )
