@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Company from './components/company/Company';
 import CompanyListing from './components/company/CompanyListing';
 import CompanyDetail from './components/company/CompanyDetail';
+import Subscription from './components/Subscription';
 
 function App() {
   const user = localStorage.getItem('user')
@@ -37,6 +38,9 @@ function App() {
         </Routes>
         <Routes>
               <Route path="/companiesDetail" element={<CompanyDetail/>} />: ''
+        </Routes>
+        <Routes>
+              <Route path="/subscription" element={<Subscription/>} />: ''
         </Routes>
       </div> 
 

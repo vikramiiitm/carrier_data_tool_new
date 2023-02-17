@@ -49,7 +49,7 @@ export default function CompanyDetail() {
     }
     const checkNull = (val) => {
         if (val === null){
-            return '-'
+            return ''
         }
         else{
             return val
@@ -288,10 +288,10 @@ export default function CompanyDetail() {
             <li>Status</li>
         </ul>
         </div>
-        <div className="col-md-3 col-lg-3 entityDetails">
+        <div className="col-md-3 col-lg-4 entityDetails" style={{minWidth:'70vw'}}>
                     <ul>
                     <li>{item?.form}</li>
-                    <li>{item?.form}</li>
+                    <li>{item?.type}</li>
                     <li>{item?.insurance_carrier}</li>
                     <li>{item?.policy_surety}</li>
                     <li>{item?.coverage_from}</li>
@@ -301,7 +301,7 @@ export default function CompanyDetail() {
                     <li>{item?.status ? item?.status:'Na'}</li>
                 </ul>  
         </div >
-        <div className='col-6'>
+        <div className='col-4'>
 
         </div>
         <div>
