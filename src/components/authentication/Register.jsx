@@ -6,13 +6,13 @@ import { Navigate, useNavigate  } from 'react-router-dom';
 import SignupService from "../../service/SignupService";
 // import login from '../../actions/auth'
 
-const Login = () => {
+const Register = () => {
     let navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const user = JSON.parse(localStorage.getItem('user'))
-    console.log(JSON.stringify('user.data',user.data))
+    const user = localStorage.getItem('user')
+    // console.log(JSON.stringify(user.access))
     // const isLoggedIn = JSON.stringify(user.data)
     const isLoggedIn = user?.data?.access
     
@@ -44,7 +44,7 @@ const Login = () => {
     
     console.log(`line 36: ${isLoggedIn}`)
     return(
-        <div className="container-sm" style={{'margin-top':'5%','margin-bottom':'5%'}}>
+        <div className="container-sm" style={{'margin-top':'5%','margin-bottom':'5%', width:'40vw'}}>
             {!isLoggedIn?
                 <div className="align-items-center">
                     <form onSubmit={e => handleLogin(e)} className='text-center mt-5 align-middle'>
@@ -90,6 +90,9 @@ const Login = () => {
                             <span className="text-center">
                                 <button type="submit" style={{'background':'#ff6600', 'color':'white'}} class="btn mt-5">Register</button>
                             </span>
+                            <div class="text-center pt-2">
+                                <p>Already have an account? <a href="/login" style={{color:'#ff6600'}}>Login here</a></p>
+\                            </div>
                         </div>
                     </form>
                 </div>
@@ -99,4 +102,4 @@ const Login = () => {
     );
 };
 
-export default Login
+export default Register

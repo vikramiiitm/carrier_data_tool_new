@@ -103,6 +103,9 @@ const Login = () => {
                                         <span className="text-center">
                                             <button type="submit" style={{'background':'#ff6600', 'color':'white'}} className="btn btn-lg mt-5">Submit</button>
                                         </span>
+                                        <div class="text-center pt-2">
+                                            <p>Don't have an account? <a href="/register" style={{color:'#ff6600'}}>Register here</a></p>
+            \                            </div>
                                     </div>
                                 </form>
                             </div>
