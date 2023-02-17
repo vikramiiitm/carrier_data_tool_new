@@ -7,14 +7,14 @@ import axios from 'axios'
 
 export default function Navbar() {
 
-  const [username, setUsername] = useState("")
+  const [username, setUsername] = useState(null)
   const navigate = useNavigate()
   const data = useSelector(state => state)
+  const user = JSON.parse(localStorage.getItem('user'))?.data?.user
+  console.log('user: ', user, JSON.parse(localStorage.getItem('user')))
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'))?.data?.user
-    console.log('user: ', user, JSON.parse(localStorage.getItem('user')))
     setUsername(user);
-  }, [data.isLoggedIn]);
+  }, [data.isLoggedIn, user]);
 
   const stripePromise = loadStripe('pk_test_51KE6cuSBJuQTVpmlxpX5x8q498VlvurtSAVhzV6rYXxhiyvFfKKfYEyJzz4lQrTycoJYrADTpLarIF7v4zuFWHCe00xXlshLwx');
   async function handlePayment(sessionId) {
@@ -27,6 +27,7 @@ export default function Navbar() {
   }
   const logout = () =>{
     localStorage.removeItem('user')
+    setUsername(null)
     navigate('/login')
   }
 
@@ -55,9 +56,11 @@ export default function Navbar() {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
-          <div type='button' onClick={() => handlePaymentserver()}> Subscribe</div>
-        </ul>
+        {username &&        
+          <ul className="navbar-nav mr-auto">
+            <div type='button' onClick={() => handlePaymentserver()}> Subscribe</div>
+          </ul>
+        }
         {username &&
           <ul className="navbar-nav" style={{ backgroundColor: '#f7f7f7' }}>
             <li className="me-auto" style={{ backgroundColor: '#f7f7f7' }}>
@@ -66,7 +69,7 @@ export default function Navbar() {
               <ul class="nav navbar-nav ms-auto" style={{ backgroundColor: '#f7f7f7' }}>
                 <li class="nav-item dropdown">
 
-                  <a href="#" style={{ 'text-transform': 'capitalize', color: 'black' }} class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class='fas fa-user-alt' />{username}</a>
+                  {username && <a href="#" style={{ 'text-transform': 'capitalize', color: 'black' }} class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class='fas fa-user-alt' />{username}</a>}
                   <div class="dropdown-menu dropdown-menu-end">
                     {/* <a href="#" class="dropdown-item">Reports</a>
                             <a href="#" class="dropdown-item">Settings</a>
