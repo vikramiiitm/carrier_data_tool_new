@@ -1,5 +1,4 @@
 import { authHeader } from "../auth-headers";
-import client from "../authentication/axiosApi";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../utils/base_url";

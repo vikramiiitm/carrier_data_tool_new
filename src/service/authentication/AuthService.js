@@ -1,4 +1,3 @@
-import client from "./axiosApi";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import {loginPending, loginSuccess} from '../../actions/auth'
@@ -14,7 +13,7 @@ function LoginService(username, password){
     console.log(username)
     // Here dispatch for login pending action
 
-    return axios.post(`http://127.0.0.1:8000/api/account/token/`,{
+    return axios.post(`${baseURL}/account/token/`,{
         username,
         password,
     })

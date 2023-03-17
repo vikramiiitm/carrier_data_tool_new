@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { store } from "../store";
 import { singupSuccess } from "../actions/auth";
-
+import {baseURL} from '../utils/base_url'
 const config = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -13,7 +13,7 @@ function SignupService(username, password, email){
     console.log(username)
     // Here dispatch for login pending action
 
-    return axios.post(`http://127.0.0.1:8000/api/account/register/`,{
+    return axios.post(`${baseURL}/account/register/`,{
         username,
         password,
         email

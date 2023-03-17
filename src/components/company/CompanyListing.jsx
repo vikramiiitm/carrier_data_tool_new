@@ -131,7 +131,7 @@ export default function CompanyListing() {
 
         setIsLoggedIn(false)
         navigate('/login')
-    }
+      }
 
       let temp = flatData(result.data.results);
       console.log(`check login ${result}`)
