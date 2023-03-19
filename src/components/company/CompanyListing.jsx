@@ -253,6 +253,7 @@ const detailPage = (id) => {
 //  console.log("ankit kumar",data)
 
   async function onsubmit(e){
+    console.log('clicked')
     e.preventDefault();
     console.log('InsideCOmpany submit');
     await filterlist(legalName, name, dot, city)
@@ -530,6 +531,7 @@ const detailPage = (id) => {
                       onChange={(e) => onChange(e, settowawayCrashMax)}/>
                     <br></br>
                   </div>
+                  <button type="submit" style={{'background':'#ff6600', 'color':'white'}} class="btn">Submit</button>
             </form>
           </div>
         </div>
@@ -615,7 +617,7 @@ const detailPage = (id) => {
                     <StyledTableCell align="left">Id</StyledTableCell>
                     <StyledTableCell align="left">Legal Name</StyledTableCell>
                     <StyledTableCell align="right">Dot</StyledTableCell>
-                    <StyledTableCell align="right">Name</StyledTableCell>
+                    <StyledTableCell align="right">Email</StyledTableCell>
                     <StyledTableCell align="right">Phone</StyledTableCell>
                     <StyledTableCell align="right">City</StyledTableCell>
                     <StyledTableCell align="right">State</StyledTableCell>
@@ -629,7 +631,7 @@ const detailPage = (id) => {
                         {row.legal_name}
                       </StyledTableCell>
                       <StyledTableCell align="right">{row.dot}</StyledTableCell>
-                      <StyledTableCell align="right">{row.dba}</StyledTableCell>
+                      <StyledTableCell align="right">{row.email}</StyledTableCell>
                       <StyledTableCell align="right">{row.phone}</StyledTableCell>
                       <StyledTableCell align="right">{row.city}</StyledTableCell>
                       <StyledTableCell align="right">{row.state}</StyledTableCell>
