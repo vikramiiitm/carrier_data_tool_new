@@ -15,6 +15,7 @@
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "stripe": "^11.15.0",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },

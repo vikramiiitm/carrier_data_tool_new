@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loadStripe } from '@stripe/stripe-js';
+// import {loadStripe} from '@stripe/stripe-js';
 import { authHeader } from "../service/auth-headers";
 import axios from 'axios'
 
@@ -15,11 +15,11 @@ export default function Navbar() {
   useEffect(() => {
     setUsername(user);
   }, [data.isLoggedIn, user]);
-
-  const stripePromise = loadStripe('pk_test_51KE6cuSBJuQTVpmlxpX5x8q498VlvurtSAVhzV6rYXxhiyvFfKKfYEyJzz4lQrTycoJYrADTpLarIF7v4zuFWHCe00xXlshLwx');
+// 
+  // const stripePromise = loadStripe('pk_test_51KE6cuSBJuQTVpmlxpX5x8q498VlvurtSAVhzV6rYXxhiyvFfKKfYEyJzz4lQrTycoJYrADTpLarIF7v4zuFWHCe00xXlshLwx');
   async function handlePayment(sessionId) {
-    const stripe = await stripePromise;
-    const { error } = await stripe.redirectToCheckout({ sessionId });
+    // const stripe = await stripePromise;
+    // const { error } = await stripe.redirectToCheckout({ sessionId });
   }
   // const username = JSON.parse(localStorage.getItem('user'))?.data?.user
   const handlePaymentserver = async () => {

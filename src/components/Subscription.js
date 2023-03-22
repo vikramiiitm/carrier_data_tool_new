@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/css/Subscription.css'
 import axios from 'axios'
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import { useSelector } from 'react-redux';
 import { authHeader } from '../service/auth-headers';
 import { baseURL } from '../utils/base_url';
@@ -26,10 +26,10 @@ export default function Subscription() {
         setAmount(amount)
     }
 
-    const stripePromise = loadStripe('pk_test_51KE6cuSBJuQTVpmlxpX5x8q498VlvurtSAVhzV6rYXxhiyvFfKKfYEyJzz4lQrTycoJYrADTpLarIF7v4zuFWHCe00xXlshLwx');
+    // const stripePromise = loadStripe('pk_test_51KE6cuSBJuQTVpmlxpX5x8q498VlvurtSAVhzV6rYXxhiyvFfKKfYEyJzz4lQrTycoJYrADTpLarIF7v4zuFWHCe00xXlshLwx');
     async function handlePayment(sessionId) {
-      const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({ sessionId }); 
+    //   const stripe = await stripePromise;
+    //   const { error } = await stripe.redirectToCheckout({ sessionId }); 
     }
     const handlePaymentserver =async ()=> {
         console.log('called handlPayment')
@@ -149,7 +149,7 @@ export default function Subscription() {
         <div class="subline"></div>
         <div class="subbuttons">
             <button type="button" class="subcanclebutton">Cancle</button>
-            <button type="button" class="subsubscribebutton" onClick={()=>handlePaymentserver()}>SUBSCRIBE</button>
+            <button type="button" class="subsubscribebutton">SUBSCRIBE</button>
         </div>
     </div>
     </div>
